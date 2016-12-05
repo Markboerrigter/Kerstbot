@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import datetime
 import random
 import numpy as np
+import ast
 client = MongoClient('mongodb://go:go1234@95.85.15.38:27017/toys')
 db = client.kerstbot
 
