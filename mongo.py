@@ -1,9 +1,5 @@
-import networkx as nx
 from pymongo import MongoClient
 import datetime
-from difflib import SequenceMatcher
-
-from stringscore import liquidmetal
 import random
 import numpy as np
 client = MongoClient('mongodb://go:go1234@95.85.15.38:27017/toys')
