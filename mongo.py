@@ -2,7 +2,7 @@ import networkx as nx
 from pymongo import MongoClient
 import datetime
 from difflib import SequenceMatcher
-import kpss
+
 from stringscore import liquidmetal
 import random
 import numpy as np
@@ -238,7 +238,7 @@ def findRightProduct(Ingredient):
             a-=2
         finalScore.append([x[0],a])
     finalScore = sorted(finalScore, key=lambda x: x[1])[::-1]
-return finalScore
+    return finalScore
 #
 # x = findRightProduct(u'jongen', [u'15', u'30'], '2.5', [u'Razende racers en stoere stuurders', u'Rocksterren en stijliconen'], u'', 18)
 #
@@ -252,7 +252,7 @@ def printprod(L):
 #
 
 
-
+'''
 done> get product
 done> get products
 done> get product(s) by price
@@ -272,3 +272,4 @@ get dislike
 # if __name__ == '__main__':
 #     # app.run(debug=True)
 #     app.run(host='0.0.0.0', debug=True)
+'''

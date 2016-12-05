@@ -3,16 +3,10 @@ import json
 import requests
 import sys
 from wit import Wit
-import talkBot as tb
 # from runLogin import getIt
-import pickle
 import random
 import datetime
 import mongo as mg
-import pprint
-from copy import copy
-import ast
-import pickle
 from flask import g
 import time
 import os
@@ -34,7 +28,7 @@ Chitchat = mg.findConfig(52)
 TriggerPhrases = Triggers['tigger']
 TriggerCats = Triggers['answers']
 
-sentimentClassifier = pickle.load( open( "sentiment_analysis_final.p", "rb" ) )
+# sentimentClassifier = pickle.load( open( "sentiment_analysis_final.p", "rb" ) )
 
 def contains_word(w,s):
     s = re.findall(r"[\w']+|[.,!?;]", s)
@@ -548,7 +542,7 @@ def presentMeal(token, recipient, data,n):
     meals = mg.findRightProduct(Ingredient)[:n]
     meals = [x for x in meals if x not in data['presented']]
     meal = meals[0]
-    postdashbot('bot',(recipient,'meal: '+ meal['results'][0]['titel']], data['message-id']) )
+    postdashbot('bot',(recipient,'meal: '+ meal['results'][0]['titel'], data['message-id']) )
     data['presented'].append(meals[0])
     typing('off', PAT, recipient)
     sendTemplate(recipient, '''{
@@ -847,7 +841,7 @@ def send_message(token, recipient, text, data):
   if data['dolog'] == 'end':
       print('done')
   elif data['Stage'] == 'Welkom':
-    if text == 'Een gang' or text == 'Een menu'
+    if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
     else:
         message = random.choice(startmessage)
@@ -859,7 +853,7 @@ def send_message(token, recipient, text, data):
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
   elif data['Stage'] == 'Gangen' and data['type'] == 'menu':
-      if text == 'menu'
+      if text == 'menu':
           message = 'We kunnen u een menu van 4 of minder gangen aanbevelen! Hoeveel gangen wilt u?'
           data = messageSend(recipient,message, token,data)
           quicks = ['1','2','3','4']
@@ -894,7 +888,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
   elif data['Stage'] == 'Gangen' and data['type'] == 'gang':
-      if text == 'gang'
+      if text == 'gang':
           message = 'Welke gang moet u nog aanvullen?'
           data = messageSend(recipient,message, token,data)
           quicks = ['Amuse', 'Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
@@ -924,7 +918,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
   elif data['Stage'] =='Chitchat':
-      if text == 'çhitchat':
+      if text == 'chitchat':
           message = random.choice(Chitchat)
           data['chitchat'].append(message)
           data = messageSend(recipient,message, token,data)
@@ -971,12 +965,12 @@ def send_message(token, recipient, text, data):
     	findToken(recipient, data, text)
         mg.updateUser(recipient, data)
     elif 'msg' in response and response['msg'] != data['oldmessage']:
-        message = response['msg'])
+        message = response['msg'].encode('utf-8')
         data = messageSend(recipient,message, token,data)
         if 'quickreplies' in response:
-            sendQuicks(recipient, response['msg'].encode('utf-8'), response['quickreplies'])
+            sendQuicks(recipient, message, response['quickreplies'])
     	else:
-            sendTexts(recipient, response['msg'].encode('utf-8'))
+            sendTexts(recipient, message)
         mg.updateUser(recipient, data)
   return data
 

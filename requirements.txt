@@ -6,3 +6,6 @@ Jinja2==2.8
 MarkupSafe==0.23
 requests==2.12.3
 Werkzeug==0.11.11
+wit==4.1.0
+numpy==1.11.1
+Flask-PyMongo==0.4.1
