@@ -659,7 +659,7 @@ def handle_messages():
             data['oldmessage'] = ''
             data['messagenumber'] = 1
             data['messagenumberresponse'] = 0
-            data['token'] = random.choice(allValues(Tokens['Start']['New']))
+            data['token'] = 'blah'
             data['starter'] = ''
             data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
             data['data'] = {}
