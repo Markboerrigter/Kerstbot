@@ -6,6 +6,7 @@ from wit import Wit
 # from runLogin import getIt
 import random
 import datetime
+import ast
 import mongo as mg
 from flask import g
 import time
