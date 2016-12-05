@@ -9,6 +9,7 @@ import numpy as np
 client = MongoClient('mongodb://go:go1234@95.85.15.38:27017/toys')
 db = client.toys
 
+err
 now = datetime.datetime.now()
 d = now.isoformat()
 # db.speelgoed.create_index( [( 'title', "text"), ('description', "text"), ('description_extended', "text"), ('brand', "text")], weights={
@@ -18,6 +19,15 @@ d = now.isoformat()
 #         'description_extended': 1
 #     })
 
+def getConvos():
+    catalogus = db.conversations
+    results = catalogus.find({})
+    return(list(results))
+
+def getUsers():
+    catalogus = db.users
+    results = catalogus.find({})
+    return(list(results))
 
 def logging(log):
     try:
