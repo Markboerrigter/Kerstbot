@@ -550,21 +550,23 @@ def presentMeal(token, recipient, data,n):
     print(meals)
     meals = [x for x in meals if x not in data['presented']]
     print(meals)
-    meal = meals[0]
-    postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
-    data['presented'].append(meal)
-    typing('off', PAT, recipient)
-    sendTemplate(recipient, ['''{
-        "title":"'''+ meal['titel']+ '''",
-        "item_url":"'''+ meal['afbeelding']+ '''",
-        "image_url":"'''+ meal['afbeelding']+ '''",
-        "buttons":[
-          {
-            "type":"web_url",
-            "url": "http://www.lidl.nl/nl/index.htm",
-            "title":"Bekijk het recept!"
-          }]}'''])
-    mg.updateUser(recipient, data)
+    if meals:
+        meal = meals[0]
+        postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
+        data['presented'].append(meal)
+        typing('off', PAT, recipient)
+        sendTemplate(recipient, ['''{
+            "title":"'''+ meal['titel']+ '''",
+            "item_url":"'''+ meal['afbeelding']+ '''",
+            "image_url":"'''+ meal['afbeelding']+ '''",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url": "http://www.lidl.nl/nl/index.htm",
+                "title":"Bekijk het recept!"
+              }]}'''])
+        mg.updateUser(recipient, data)
+        return True
 
 def findToken(recipient, data, text):
   data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
@@ -601,6 +603,16 @@ def findToken(recipient, data, text):
           mg.updateUser(recipient, data)
           send_message(PAT, recipient, 'presentatie', data)
   elif Stage == 'Presentatie':
+      if text == 'again':
+          data[ 'data'] = []
+          data['Stage'] = 'Keuzes'
+          mg.updateUser(recipient, data)
+          findToken(recipient, data, text)
+      elif text == 'end':
+          NextStage = TokenStages[-1]
+          data['Stage'] = NextStage
+          findToken(recipient, data, text)
+      else:
       NextStage = TokenStages[TokenStages.index(Stage)+1]
       data['Stage'] = NextStage
       response = {}
@@ -916,23 +928,25 @@ def send_message(token, recipient, text, data):
           findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
       if text == 'presentatie':
-          presentMeal(token, recipient, data,8)
-          message = 'Is dit wat u zoekt?'
-          data = messageSend(recipient,message, token,data)
-          quicks = ['Ja', 'Nee']
-          time.sleep(1.5)
-          sendQuicks(recipient, message, quicks)
-          mg.updateUser(recipient, data)
-      elif text == 'Ja':
-          findToken(recipient, data, text)
-      elif text == 'Nee':
-          presentMeal(token, recipient, data,8)
-          message = 'Is dit wat u zoekt?'
-          data = messageSend(recipient,message, token,data)
-          quicks = ['Ja', 'Nee']
-          time.sleep(1.5)
-          sendQuicks(recipient, message, quicks)
-          mg.updateUser(recipient, data)
+          if presentMeal(token, recipient, data,8)
+              message = 'Is dit wat u zoekt?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
+              time.sleep(1.5)
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+          else:
+              message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
+              time.sleep(1.5)
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+      if data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+          if text == 'Ja':
+              findToken(recipient, data, 'again')
+          elif text == 'Nee':
+              findToken(recipient, data, 'ending')
   elif data['Stage'] =='Chitchat':
       if text == 'chitchat':
           message = random.choice(Chitchat)
