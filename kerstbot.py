@@ -621,7 +621,7 @@ def findToken(recipient, data, text):
       response = {}
       mg.updateUser(recipient, data)
 
-def messageSend(recipient,message,data):
+def messageSend(recipient,message, token,data):
     data['text'].append(('bot',message))
     data['oldmessage'] = message
     postdashbot('bot',(recipient,message, data['message-id']))
