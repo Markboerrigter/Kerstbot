@@ -10,6 +10,14 @@ db = client.kerstbot
 now = datetime.datetime.now()
 d = now.isoformat()
 
+def logging(log):
+    try:
+        catalogus = db.conversations
+        catalogus.insert(log)
+        return 'done'
+    except Exception, e:
+        return 'Not found user because ',e
+
 def findArticlesTitle(the_query,y):
     try:
         catalogus = db.products
