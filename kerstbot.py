@@ -113,7 +113,7 @@ def sendTexts(sender, mess):
     params={"access_token": PAT},
     data=json.dumps({
       "recipient": {"id": sender},
-      "message": {"text": mess}
+      "message": {"text": mess.encode('utf-8')}
     }),
     headers={'Content-type': 'application/json'})
     if r.status_code != requests.codes.ok:
@@ -849,7 +849,9 @@ def send_message(token, recipient, text, data):
     else:
         message = random.choice(startmessage)
         data = messageSend(recipient,message, token,data)
+        print('send: '+message)
         sendTexts(recipient, message)
+        print('send: '+message)
         message = 'Bent u op zoek naar een volledig menu of een gang?'
         data = messageSend(recipient,message, token,data)
         quicks = ['Een gang', 'Een menu']
