@@ -577,7 +577,7 @@ def presentMeal(token, recipient, data,n):
                 "type":"postback",
                 "title":"Start Chatting",
                 "payload":"DEVELOPER_DEFINED_PAYLOAD"
-              }'''])
+              }]}'''])
     mg.updateUser(recipient, data)
 
 def findToken(recipient, data, text):
