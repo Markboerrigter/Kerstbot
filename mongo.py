@@ -71,11 +71,11 @@ def findRightProduct(Ingredient):
     finalScore = sorted(finalScore, key=lambda x: x[1])[::-1]
     return finalScore
 #
-x = findRightProduct('kip')
-
-for y in x :
-
-    print(y[0]['titel'])
+# x = findRightProduct('kip')
+#
+# for y in x :
+#
+#     print(y[0]['titel'])
 
 def printprod(L):
     for x in L:
