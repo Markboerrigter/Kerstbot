@@ -545,7 +545,9 @@ def getFeedback(data):
 
 def presentMeal(token, recipient, data,n):
     Ingredient = data['data']['Ingredient']
+    print(Ingredient)
     meals = mg.findRightProduct(Ingredient)[:n]
+    print(meals)
     meals = [x for x in meals if x not in data['presented']]
     print(meals)
     meal = meals[0]
