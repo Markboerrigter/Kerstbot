@@ -965,6 +965,8 @@ def send_message(token, recipient, text, data):
               sendTexts(recipient, message)
               mg.updateUser(recipient, data)
               findToken(recipient, data, text)
+      else:
+          findToken(recipient, data, text)
   elif data['Stage'] == 'Afscheid':
       message = random.choice(responsemessage)
       data = messageSend(recipient,message, token,data)
