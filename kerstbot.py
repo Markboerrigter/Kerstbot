@@ -569,14 +569,14 @@ def findToken(recipient, data, text):
     #   data['type'] = text
       if text == 'Een gang':
           data['type'] = 'gang'
-          NextStage = TokenStages[TokenStages.index(Stage)+2]
+          NextStage = TokenStages[TokenStages.index(Stage)+1]
           data['Stage'] = NextStage
           mg.updateUser(recipient, data)
           send_message(PAT, recipient, 'gang', data)
       elif text == 'Een menu':
           data['type'] = 'menu'
           NextStage = TokenStages[TokenStages.index(Stage)+1]
-          data['token'] = 'personality'
+        #   data['token'] = 'personality'
         #   data['chitchat'].append(data['token'])
           data['Stage'] = NextStage
           mg.updateUser(recipient, data)
