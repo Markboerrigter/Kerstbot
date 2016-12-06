@@ -864,6 +864,7 @@ def send_message(token, recipient, text, data):
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
   elif data['Stage'] == 'Gangen' and data['type'] == 'menu':
+      print(text)
       if text == 'menu':
           message = 'We kunnen u een menu van 4 of minder gangen aanbevelen! Hoeveel gangen wilt u?'
           data = messageSend(recipient,message, token,data)
@@ -871,6 +872,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif text.isdigit():
+          print(text)
           text == int(text)
           if text == 2:
               message = 'Wilt u een voor- of een nagerecht?'
