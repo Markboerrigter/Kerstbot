@@ -105,6 +105,7 @@ def findRightProduct(Ingredient):
             a-=2
         finalScore.append([x[0],a])
     finalScore = sorted(finalScore, key=lambda x: x[1])[::-1]
+    finalScore = [x for [x,y] in finalScore]
     return finalScore
 #
 # x = findRightProduct('kip')
