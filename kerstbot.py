@@ -550,7 +550,7 @@ def presentMeal(token, recipient, data,n):
     postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
     data['presented'].append(meal)
     typing('off', PAT, recipient)
-    sendTemplate(recipient, ['''{
+    sendTemplate(recipient, '''[{
         "title":'''+ meal['titel']+ ''',
         "item_url":'''+ meal['afbeelding']+ ''',
         "image_url":'''+ meal['afbeelding']+ ''',
@@ -561,7 +561,7 @@ def presentMeal(token, recipient, data,n):
             "title":"Bekijk het recept!"
           }
         ]
-      }'''])
+      }]''')
     sendTemplate(recipient, ['''{
         "title":'''+ meal['titel']+ ''',
         "item_url":'''+ meal['afbeelding']+ ''',
