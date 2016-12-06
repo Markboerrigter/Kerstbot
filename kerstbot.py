@@ -551,13 +551,13 @@ def presentMeal(token, recipient, data,n):
     data['presented'].append(meal)
     typing('off', PAT, recipient)
     sendTemplate(recipient, ['''{
-        "title":'Hi',
-        "item_url":'''+ meal['titel']+ ''',
+        "title":'''+ meal['titel']+ ''',
+        "item_url":'''+ meal['afbeelding']+ ''',
         "image_url":'''+ meal['afbeelding']+ ''',
         "buttons":[
           {
             "type":"web_url",
-            "url": http://www.lidl.nl/nl/index.htm,
+            "url": "http://www.lidl.nl/nl/index.htm",
             "title":"Bekijk het recept!"
           }
         ]
