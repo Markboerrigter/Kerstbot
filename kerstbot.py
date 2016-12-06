@@ -13,6 +13,7 @@ from flask import g
 import time
 import os
 import re
+import traceback
 # Number of presented articles
 
 # childTypes = mg.findConfig(18)
@@ -543,6 +544,7 @@ def presentMeal(token, recipient, data,n):
     Ingredient = data['data']['Ingredient']
     meals = mg.findRightProduct(Ingredient)[:n]
     meals = [x for x in meals if x not in data['presented']]
+    print(meals)
     meal = meals[0]
     postdashbot('bot',(recipient,'meal: '+ meal['results'][0]['titel'], data['message-id']) )
     data['presented'].append(meals[0])
@@ -798,6 +800,9 @@ def handle_messages():
         print "Caught it!"
         print(sender)
         print(e)
+        exc_info = sys.exc_info()
+        traceback.print_exception(*exc_info)
+        del exc_info
         data = mg.findUser(sender)
         if isinstance(data,dict):
             data['message-id'] = mid
@@ -848,11 +853,9 @@ def send_message(token, recipient, text, data):
         findToken(recipient, data, text)
     else:
         message = random.choice(startmessage)
-        message = message[0] + data['info']['first_name']+ message[1] 
+        message = message[0] + data['info']['first_name']+ message[1]
         data = messageSend(recipient,message, token,data)
-        print('send: '+message)
         sendTexts(recipient, message)
-        print('send: '+message)
         message = 'Bent u op zoek naar een volledig menu of een gang?'
         data = messageSend(recipient,message, token,data)
         quicks = ['Een gang', 'Een menu']
