@@ -873,7 +873,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif text.isdigit():
           print(text)
-          text == int(text)
+          text = int(text)
           if text == 2:
               message = 'Wilt u een voor- of een nagerecht?'
               data = messageSend(recipient,message, token,data)
