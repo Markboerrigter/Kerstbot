@@ -613,11 +613,11 @@ def findToken(recipient, data, text):
           data['Stage'] = NextStage
           findToken(recipient, data, text)
       else:
-      NextStage = TokenStages[TokenStages.index(Stage)+1]
-      data['Stage'] = NextStage
-      response = {}
-      mg.updateUser(recipient, data)
-      send_message(PAT, recipient, 'chitchat', data)
+          NextStage = TokenStages[TokenStages.index(Stage)+1]
+          data['Stage'] = NextStage
+          response = {}
+          mg.updateUser(recipient, data)
+          send_message(PAT, recipient, 'chitchat', data)
   elif Stage == 'Feedback':
       NextStage = TokenStages[TokenStages.index(Stage)+1]
       data['Stage'] = NextStage
