@@ -971,6 +971,7 @@ def send_message(token, recipient, text, data):
       message = random.choice(responsemessage)
       data = messageSend(recipient,message, token,data)
       sendTexts(recipient, message)
+      data['dolog'] == 'end'
       mg.updateUser(recipient, data)
   else:
     response, data = getResponse(recipient, text, data)
