@@ -550,18 +550,34 @@ def presentMeal(token, recipient, data,n):
     postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
     data['presented'].append(meal)
     typing('off', PAT, recipient)
+    # sendTemplate(recipient, ['''{
+    #     "title":'''+ meal['titel']+ ''',
+    #     "item_url":'''+ meal['afbeelding']+ ''',
+    #     "image_url":'''+ meal['afbeelding']+ ''',
+    #     "buttons":[
+    #       {
+    #         "type":"web_url",
+    #         "url": "http://www.lidl.nl/nl/index.htm",
+    #         "title":"Bekijk het recept!"
+    #       }
+    #     ]
+    #   }'''])
     sendTemplate(recipient, ['''{
-        "title":'''+ meal['titel']+ ''',
-        "item_url":'''+ meal['afbeelding']+ ''',
-        "image_url":'''+ meal['afbeelding']+ ''',
-        "buttons":[
-          {
-            "type":"web_url",
-            "url": "http://www.lidl.nl/nl/index.htm",
-            "title":"Bekijk het recept!"
-          }
-        ]
-      }'''])
+            "title":"Welcome to Peter\'s Hats",
+            "item_url":"https://petersfancybrownhats.com",
+            "image_url":"https://petersfancybrownhats.com/company_image.png",
+            "subtitle":"We\'ve got the right hat for everyone.",
+            "buttons":[
+              {
+                "type":"web_url",
+                "url":"https://petersfancybrownhats.com",
+                "title":"View Website"
+              },
+              {
+                "type":"postback",
+                "title":"Start Chatting",
+                "payload":"DEVELOPER_DEFINED_PAYLOAD"
+              }'''])
     mg.updateUser(recipient, data)
 
 def findToken(recipient, data, text):
