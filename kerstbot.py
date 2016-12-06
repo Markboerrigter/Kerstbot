@@ -848,6 +848,7 @@ def send_message(token, recipient, text, data):
         findToken(recipient, data, text)
     else:
         message = random.choice(startmessage)
+        message = message[0] + data['info']['first_name']+ message[1] 
         data = messageSend(recipient,message, token,data)
         print('send: '+message)
         sendTexts(recipient, message)
