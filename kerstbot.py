@@ -138,7 +138,9 @@ def sendQuicksImage(sender, mess, quicks):
     	print r.text
 
 def sendTemplate(sender, buttons):
-    print(buttons)
+    # print(buttons)
+    for x in buttons:
+        print(x)
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",
     params={"access_token": PAT},
     data=json.dumps({
@@ -150,7 +152,7 @@ def sendTemplate(sender, buttons):
       "type":"template",
       "payload":{
         "template_type":"generic",
-        "elements":buttons
+        "elements": buttons
       }
     }
   }
