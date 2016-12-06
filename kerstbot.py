@@ -138,6 +138,7 @@ def sendQuicksImage(sender, mess, quicks):
     	print r.text
 
 def sendTemplate(sender, buttons):
+    print(buttons)
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",
     params={"access_token": PAT},
     data=json.dumps({
@@ -149,7 +150,7 @@ def sendTemplate(sender, buttons):
       "type":"template",
       "payload":{
         "template_type":"generic",
-        "elements":[x for x in buttons]
+        "elements":buttons
       }
     }
   }
@@ -549,8 +550,8 @@ def presentMeal(token, recipient, data,n):
     postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
     data['presented'].append(meal)
     typing('off', PAT, recipient)
-    sendTemplate(recipient, '''{
-        "title":,
+    sendTemplate(recipient, ['''{
+        "title":'Hi',
         "item_url":'''+ meal['titel']+ ''',
         "image_url":'''+ meal['afbeelding']+ ''',
         "buttons":[
@@ -560,7 +561,7 @@ def presentMeal(token, recipient, data,n):
             "title":"Bekijk het recept!"
           }
         ]
-      }''')
+      }'''])
     mg.updateUser(recipient, data)
 
 def findToken(recipient, data, text):
