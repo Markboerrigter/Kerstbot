@@ -46,6 +46,18 @@ def addProduct(inf):
 def score(x,y):
     return float(levenshtein(x,y)/float((len(x)+len(y))/2))
 
+
+
+def findConfig(x):
+    try:
+        catalogus = db.configs
+        ans = catalogus.find({'number': x})[0]
+        for x in ans:
+            if x != '_id' and x != 'number':
+                return ans[x]
+    except Exception, e:
+        return 'Not found any configuration',e
+        
 def findRightProduct(Ingredient):
     ideaQuery = findArticlesTitleAndDescription(Ingredient)
     titleQuery = findArticlesTitle(Ingredient,0.5)

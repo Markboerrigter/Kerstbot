@@ -559,6 +559,7 @@ def presentMeal(token, recipient, data,n):
         ]
       }''')
     mg.updateUser(recipient, data)
+
 def findToken(recipient, data, text):
   data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
   oldToken = data['token']
