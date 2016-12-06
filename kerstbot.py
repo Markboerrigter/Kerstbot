@@ -546,17 +546,17 @@ def presentMeal(token, recipient, data,n):
     meals = [x for x in meals if x not in data['presented']]
     print(meals)
     meal = meals[0]
-    postdashbot('bot',(recipient,'meal: '+ meal['results'][0]['titel'], data['message-id']) )
-    data['presented'].append(meals[0])
+    postdashbot('bot',(recipient,'meal: '+ meal'titel'], data['message-id']) )
+    data['presented'].append(meal)
     typing('off', PAT, recipient)
     sendTemplate(recipient, '''{
         "title":,
-        "item_url":'''+ meal['results'][0]['titel']+ ''',
-        "image_url":'''+ meal['results'][0]['afbeelding']+ ''',
+        "item_url":'''+ meal['titel']+ ''',
+        "image_url":'''+ meal['afbeelding']+ ''',
         "buttons":[
           {
             "type":"web_url",
-            "url": '''+ meal['pageURL'] + ''',
+            "url": http://www.lidl.nl/nl/index.htm,
             "title":"Bekijk het recept!"
           }
         ]
