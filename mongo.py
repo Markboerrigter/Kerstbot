@@ -46,7 +46,31 @@ def addProduct(inf):
 def score(x,y):
     return float(levenshtein(x,y)/float((len(x)+len(y))/2))
 
+def findUser(id):
+    try:
+        catalogus = db.users
+        ans = list(catalogus.find({'_id': id}))[0]
+        outcome = ans
+        return outcome
+    except Exception, e:
+        return None
 
+def updateUser(id, newInformation):
+    try:
+        catalogus = db.users
+        catalogus.update({'_id': str(id)},newInformation)
+        return 'id: ' +str(id) + 'has been updated'
+    except Exception, e:
+        return 'Not found user',e
+
+def insertUser(id, newInformation):
+    try:
+        newInformation['_id'] = str(id)
+        catalogus = db.users
+        catalogus.insert(newInformation)
+        return 'id: ' +str(id) + 'has been updated'
+    except Exception, e:
+        return 'Not found user because ',e
 
 def findConfig(x):
     try:
@@ -57,7 +81,7 @@ def findConfig(x):
                 return ans[x]
     except Exception, e:
         return 'Not found any configuration',e
-        
+
 def findRightProduct(Ingredient):
     ideaQuery = findArticlesTitleAndDescription(Ingredient)
     titleQuery = findArticlesTitle(Ingredient,0.5)
