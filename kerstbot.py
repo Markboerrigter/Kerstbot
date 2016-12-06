@@ -546,7 +546,7 @@ def presentMeal(token, recipient, data,n):
     meals = [x for x in meals if x not in data['presented']]
     print(meals)
     meal = meals[0]
-    postdashbot('bot',(recipient,'meal: '+ meal'titel'], data['message-id']) )
+    postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
     data['presented'].append(meal)
     typing('off', PAT, recipient)
     sendTemplate(recipient, '''{
