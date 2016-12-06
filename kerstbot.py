@@ -885,6 +885,7 @@ def send_message(token, recipient, text, data):
               mg.updateUser(recipient, data)
               findToken(recipient, data, text)
           elif text == 3:
+              print(text)
               data['gangen'] = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
               mg.updateUser(recipient, data)
               findToken(recipient, data, text)
