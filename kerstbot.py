@@ -631,6 +631,7 @@ def messageSend(recipient,message, token,data):
     data['oldmessage'] = message
     postdashbot('bot',(recipient,message, data['message-id']))
     typing('off', token, recipient)
+    time.sleep(1)
     return data
 
 """ FUNCTIONS TO RECEIVE AND SEND MESSAGES
