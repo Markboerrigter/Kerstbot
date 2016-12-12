@@ -900,6 +900,7 @@ def send_message(token, recipient, text, data):
       mg.updateUser(recipient, data)
   else:
     response, data = getResponse(recipient, text, data)
+    print(response)
     if response['type'] == 'stop' or response['msg'] == data['oldmessage']:
     	findToken(recipient, data, text)
         mg.updateUser(recipient, data)
