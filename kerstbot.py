@@ -713,7 +713,7 @@ def send_message(token, recipient, text, data):
           data['data']['voorkeur'] = text
           quicks = ['ijs', 'Cake']
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
-          sendQuicks(recipient, message)
+          sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En als het gaat om het dessert, waar zit je dan aan te denken?':
           message = 'Lekker! heb je bepaalde smaken in gedachten?'
@@ -752,7 +752,7 @@ def send_message(token, recipient, text, data):
         #   data['data']['Nagerecht'] = text
           quicks = ['Cake', 'Ijs']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-          sendQuicks(recipient, message)
+          sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Naar wat voor soort dessert ben je op zoek?':
           data['data']['NagerechtSmaak'] = text
