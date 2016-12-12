@@ -311,32 +311,74 @@ def getFeedback(data):
     if feedback == '\U0001f620':
         return '1'
 
-def presentMeal(token, recipient, data,n):
+def presentMeal(token, recipient, data):
     if 'ideeen' in data:
-        meals = [x for x in data['ideeen'] if x not in data['presented']]
+        meals = [x for x in data['ideeen']]
     else:
         Ingredient = data['data']['Ingredient']
         print(Ingredient)
-        meals = mg.findRightProduct(Ingredient)[:n]
+        meals = mg.findRightProduct(Ingredient)
         data['ideeen'] = meals
         print(meals)
     meals = [x for x in meals if x not in data['presented']]
     if meals:
-        meal = meals[0]
-        postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
-        data['presented'].append(meal)
-        typing('off', PAT, recipient)
-        sendTemplate(recipient, ['''{
-            "title":"'''+ meal['titel']+ '''",
-            "item_url":"'''+ meal['afbeelding']+ '''",
-            "image_url":"'''+ meal['afbeelding']+ '''",
-            "buttons":[
-              {
-                "type":"web_url",
-                "url": "http://www.lidl.nl/nl/index.htm",
-                "title":"Bekijk het recept!"
-              }]}'''])
-        mg.updateUser(recipient, data)
+        if isinstance(meals[0], collections.MutableSequence):
+            meal1 = meals[0][0]
+            meal2 = meals[1][0]
+            meal3 = meals[2][0]
+            postdashbot('bot',(recipient,'meal: '+ meal1['titel']+ meal2['titel']+ meal3['titel'], data['message-id']) )
+            data['presented'].extend([meal1, meal2, meal3])
+            data['ideeen'][0].remove(meal1)
+            data['ideeen'][1].remove(meal2)
+            data['ideeen'][2].remove(meal3)
+            typing('off', PAT, recipient)
+            sendTemplate(recipient, ['''{
+                "title":"'''+ meal1['titel']+ '''",
+                "item_url":"'''+ meal1['afbeelding']+ '''",
+                "image_url":"'''+ meal1['afbeelding']+ '''",
+                "buttons":[
+                  {
+                    "type":"web_url",
+                    "url": "http://www.lidl.nl/nl/index.htm",
+                    "title":"Bekijk het recept!"
+                  }]}''','''{
+                      "title":"'''+ meal2['titel']+ '''",
+                      "item_url":"'''+ meal2['afbeelding']+ '''",
+                      "image_url":"'''+ meal2['afbeelding']+ '''",
+                      "buttons":[
+                        {
+                          "type":"web_url",
+                          "url": "http://www.lidl.nl/nl/index.htm",
+                          "title":"Bekijk het recept!"
+                        }]}''','''{
+                            "title":"'''+ meal3['titel']+ '''",
+                            "item_url":"'''+ meal3['afbeelding']+ '''",
+                            "image_url":"'''+ meal3['afbeelding']+ '''",
+                            "buttons":[
+                              {
+                                "type":"web_url",
+                                "url": "http://www.lidl.nl/nl/index.htm",
+                                "title":"Bekijk het recept!"
+                              }]}'''
+                  ])
+            mg.updateUser(recipient, data)
+        else:
+            meal = meals[0]
+            data['ideeen'].remove(meal)
+            postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
+            data['presented'].append(meal)
+            typing('off', PAT, recipient)
+            sendTemplate(recipient, ['''{
+                "title":"'''+ meal['titel']+ '''",
+                "item_url":"'''+ meal['afbeelding']+ '''",
+                "image_url":"'''+ meal['afbeelding']+ '''",
+                "buttons":[
+                  {
+                    "type":"web_url",
+                    "url": "http://www.lidl.nl/nl/index.htm",
+                    "title":"Bekijk het recept!"
+                  }]}'''])
+            mg.updateUser(recipient, data)
         return True
 
 def findToken(recipient, data, text):
@@ -665,7 +707,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?':
-          message = 'En als het gaat om het dessert, waar zit je dan aan te denken?'
+          message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
           data = messageSend(recipient,message, token,data)
           data['data']['voorkeur'] = text
           quicks = ['ijs', 'Cake']
@@ -703,7 +745,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif text == 'Nagerecht':
           data['gang']= text
-          message = 'Naar wat voor soort dessert ben je op zoek?'
+          message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
@@ -768,7 +810,7 @@ def send_message(token, recipient, text, data):
           findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
       if text == 'presentatie':
-          if presentMeal(token, recipient, data,8):
+          if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
@@ -797,7 +839,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
       elif text == 'Nee':
-          if presentMeal(token, recipient, data,8):
+          if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']

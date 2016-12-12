@@ -23,7 +23,6 @@ def findArticlesTitle(the_query,y):
     try:
         catalogus = db.products
         results = list(catalogus.find({"$text": {'$search': the_query } } ,{ 'score': { "$meta": "textScore" } }).sort( [( 'score', { "$meta": "textScore" } )] ))
-        results = [x for x in results if x['score'] > y]
         return list(results)
     except Exception, e:
         return 'Not found',e
@@ -31,7 +30,7 @@ def findArticlesTitle(the_query,y):
 def findArticlesTitleAndDescription(the_query):
     try:
         catalogus = db.products
-        data = list(catalogus.find({'$or': [{'titel': {'$regex': '.*'+the_query+'.*','$options' : 'i'}},{'ingr1': {'$regex': '.*'+the_query+'.*','$options' : 'i'}},{'ingr2': {'$regex': '.*'+the_query+'.*','$options' : 'i'}} ]}))
+        data = list(catalogus.find({'$or': [{'Title': {'$regex': '.*'+the_query+'.*','$options' : 'i'}},{'Ingredienten': {'$regex': '.*'+the_query+'.*','$options' : 'i'}},{'Bereidingswijze': {'$regex': '.*'+the_query+'.*','$options' : 'i'}} ]}))
         return data
     except Exception, e:
         return 'Not found'
@@ -59,7 +58,15 @@ def addProduct(inf):
 # products = []
 # for x in f:
 #     addProduct(x['results'])
-
+def findArticlesTitle(the_query):
+    try:
+        catalogus = db.products
+        results = list(catalogus.find({"$text": {'$search': the_query } } ,{ 'score': { "$meta": "textScore" } }).sort( [( 'score', { "$meta": "textScore" } )] ))
+        # results = [x for x in results if x['score'] > y]
+        results = [[{i:a[i] for i in a if i!='score'},a['score']] for a in results]
+        return (results)
+    except Exception, e:
+        return 'Not found',e
 
 def score(x,y):
     return float(levenshtein(x,y)/float((len(x)+len(y))/2))
@@ -100,37 +107,102 @@ def findConfig(x):
     except Exception, e:
         return 'Not found any configuration',e
 
-def findRightProduct(Ingredient):
+def findGang(gang):
+    try:
+        if gang == 'Voorgerecht':
+            sex = 'voor'
+        if gang == 'Hoofdgerecht':
+            sex = 'hoofd'
+        if gang == 'Nagerecht':
+            sex = 'na'
+        catalogus = db.products
+        results = list(catalogus.find({'Gang': sex}))
+        return results
+    except Exception, e:
+        return 'Not found'
+
+def findDesertType(type):
+    try:
+        type = type.lower()
+        catalogus = db.products
+        results = list(catalogus.find({'Type Gerecht': type}))
+        return results
+    except Exception, e:
+        return 'Not found'
+
+def findVega(type):
+    try:
+        type = type.lower()
+        catalogus = db.products
+        results = list(catalogus.find({'Type Gerecht': type}))
+        return results
+    except Exception, e:
+        return 'Not found'
+
+def findLevel(type):
+    try:
+        if type == 'Amateur':
+            query = [{'Moeilijkheid': 1}, {'Moeilijkheid': 2}]
+        else:
+            query = [{'Moeilijkheid': 2}, {'Moeilijkheid': 3}]
+        catalogus = db.products
+        results = list(catalogus.find({'$or': query}))
+        return results
+    except Exception, e:
+        return 'Not found'
+
+def find(x,L):
+    return [(i, colour.index(x)) for i, colour in enumerate(L) if x in colour]
+
+def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
+    gangQuery = findGang(gang)
+    if gang == 'Nagerecht':
+        voorkeurQuery = findDesertType(dessertKind)
+        techniekQuery = ''
+    else:
+        voorkeurQuery = findVega(vega)
+        techniekQuery = findArticlesTitle(technique)
+    techniques = [x for [x,y] in techniekQuery]
+    levelQuery = findLevel(level)
     ideaQuery = findArticlesTitleAndDescription(Ingredient)
-    titleQuery = findArticlesTitle(Ingredient,0.5)
-    # print(ideaQuery,titleQuery)
-    allProducts = ideaQuery + titleQuery
-    print(len(ideaQuery))
-    print(len(titleQuery))
-    uniqueProducts = dict((v['_id'],v) for v in allProducts).values()
-    uniqueProducts = [[x,0] for x in uniqueProducts]
-    uniqueProducts = [x for x in uniqueProducts if x[0]['titel']]
+    titleQuery = findArticlesTitle(Ingredient)
+    ideas = [x for [x,y] in titleQuery]
+    vegaQuery = findVega(vega)
     finalScore = []
-    for x in uniqueProducts:
+    for x in gangQuery:
         a = 0
-        if x[0] in titleQuery:
-            a+=10
-        else:
-            a-=10
-        if x[0] in ideaQuery:
-            a+=2
-        else:
-            a-=2
-        finalScore.append([x[0],a])
+        if x in techniques:
+            ind = find(x,techniekQuery)[0]
+            a+=techniekQuery[ind[0]][1]
+        if x in ideas:
+            ind = find(x,titleQuery)[0]
+            a+=titleQuery[ind[0]][1]
+        if x in voorkeurQuery:
+            a += 2
+        if x in levelQuery:
+            a += 2
+        if x in ideaQuery:
+            a +=2
+        if x in vegaQuery:
+            a += 3
+        finalScore.append([x,a])
     finalScore = sorted(finalScore, key=lambda x: x[1])[::-1]
     finalScore = [x for [x,y] in finalScore]
     return finalScore
-#
-# x = findRightProduct('kip')
-#
-# for y in x :
-#
-#     print(y[0]['titel'])
+
+def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
+    if isinstance(gang,str):
+        meals = findForGang(Ingredient, dessertKind, technique, level, gang,vega)
+    else:
+        meals = []
+        for x in gang:
+            meals.append(findForGang(Ingredient, dessertKind, technique, level, x,vega))
+    return meals
+
+x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
+
+for y in x :
+    print(y['Title'])
 
 def printprod(L):
     for x in L:
