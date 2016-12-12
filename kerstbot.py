@@ -338,7 +338,7 @@ def presentMeal(token, recipient, data):
                     "type":"web_url",
                     "url": "http://www.lidl.nl/nl/index.htm",
                     "title":"Bekijk het recept!"
-                  }]}''','''{
+                  }]},{
                       "title":"'''+ meal2['Title']+ '''",
                       "item_url":"'''+ meal2['Link gerecht']+ '''",
                       "image_url":"'''+ meal2['Link afbeelding']+ '''",
@@ -347,7 +347,7 @@ def presentMeal(token, recipient, data):
                           "type":"web_url",
                           "url": "http://www.lidl.nl/nl/index.htm",
                           "title":"Bekijk het recept!"
-                        }]}''','''{
+                        }]},{
                             "title":"'''+ meal3['Title']+ '''",
                             "item_url":"'''+ meal3['Link gerecht']+ '''",
                             "image_url":"'''+ meal3['Link afbeelding']+ '''",
