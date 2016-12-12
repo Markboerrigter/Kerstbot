@@ -330,27 +330,27 @@ def presentMeal(token, recipient, data):
             data['ideeen'][2].remove(meal3cake)
             typing('off', PAT, recipient)
             sendTemplate(recipient, ['''{
-                "title":"'''+ meal1['titel']+ '''",
-                "item_url":"'''+ meal1['afbeelding']+ '''",
-                "image_url":"'''+ meal1['afbeelding']+ '''",
+                "title":"'''+ meal1['Title']+ '''",
+                "item_url":"'''+ meal1['Link gerecht']+ '''",
+                "image_url":"'''+ meal1['Link afbeelding']+ '''",
                 "buttons":[
                   {
                     "type":"web_url",
                     "url": "http://www.lidl.nl/nl/index.htm",
                     "title":"Bekijk het recept!"
                   }]}''','''{
-                      "title":"'''+ meal2['titel']+ '''",
-                      "item_url":"'''+ meal2['afbeelding']+ '''",
-                      "image_url":"'''+ meal2['afbeelding']+ '''",
+                      "title":"'''+ meal2['Title']+ '''",
+                      "item_url":"'''+ meal2['Link gerecht']+ '''",
+                      "image_url":"'''+ meal2['Link afbeelding']+ '''",
                       "buttons":[
                         {
                           "type":"web_url",
                           "url": "http://www.lidl.nl/nl/index.htm",
                           "title":"Bekijk het recept!"
                         }]}''','''{
-                            "title":"'''+ meal3['titel']+ '''",
-                            "item_url":"'''+ meal3['afbeelding']+ '''",
-                            "image_url":"'''+ meal3['afbeelding']+ '''",
+                            "title":"'''+ meal3['Title']+ '''",
+                            "item_url":"'''+ meal3['Link gerecht']+ '''",
+                            "image_url":"'''+ meal3['Link afbeelding']+ '''",
                             "buttons":[
                               {
                                 "type":"web_url",
