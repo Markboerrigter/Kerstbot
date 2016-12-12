@@ -356,20 +356,26 @@ def findToken(recipient, data, text):
           data['Stage'] = NextStage
           mg.updateUser(recipient, data)
           send_message(PAT, recipient, 'menu', data)
+  elif Stage == 'Gangen':
+      NextStage = TokenStages[TokenStages.index(Stage)+1]
+      data['Stage'] = NextStage
+      response = {}
+      mg.updateUser(recipient, data)
+      send_message(PAT, recipient, 'Keuze', data)
   elif Stage == 'Keuzes':
-      if not all(k in data['data'] for k in ['Ingredient']):
-          data['token'] = random.choice(allValues(Tokens[Stage]))
-          while get_keys(Tokens, data['token'])[-1] in data['data']:
-              data['token'] = random.choice(allValues(Tokens[Stage]))
-          data['starter'] = get_keys(Tokens, data['token'])[-1]
-          mg.updateUser(recipient, data)
-          send_message(PAT, recipient, data['starter'], data)
-      else:
-          NextStage = TokenStages[TokenStages.index(Stage)+1]
-          data['Stage'] = NextStage
-          response = {}
-          mg.updateUser(recipient, data)
-          send_message(PAT, recipient, 'presentatie', data)
+    #   if not all(k in data['data'] for k in ['Ingredient']):
+    #       data['token'] = random.choice(allValues(Tokens[Stage]))
+    #       while get_keys(Tokens, data['token'])[-1] in data['data']:
+    #           data['token'] = random.choice(allValues(Tokens[Stage]))
+    #       data['starter'] = get_keys(Tokens, data['token'])[-1]
+    #       mg.updateUser(recipient, data)
+    #       send_message(PAT, recipient, data['starter'], data)
+    #   else:
+      NextStage = TokenStages[TokenStages.index(Stage)+1]
+      data['Stage'] = NextStage
+      response = {}
+      mg.updateUser(recipient, data)
+      send_message(PAT, recipient, 'presentatie', data)
   elif Stage == 'Presentatie':
       if text == 'again':
           data[ 'data'] = []
@@ -636,64 +642,123 @@ def send_message(token, recipient, text, data):
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
     else:
-        message = random.choice(startmessage)
-        message = message[0] + data['info']['first_name']+ message[1]
+        # message = random.choice(startmessage)
+        message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor de kerstdagen.'
         data = messageSend(recipient,message, token,data)
         sendTexts(recipient, message)
-        message = 'Bent u op zoek naar een volledig menu of een gang?'
+        message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
         data = messageSend(recipient,message, token,data)
         quicks = ['Een gang', 'Een menu']
+        # sendImage(MEALS 3-1)
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
   elif data['Stage'] == 'Gangen' and data['type'] == 'menu':
       print(text)
       if text == 'menu':
-          message = 'We kunnen u een menu van 4 of minder gangen aanbevelen! Hoeveel gangen wilt u?'
+          message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['1','2','3','4']
+          quicks = ['Vegetarisch', 'Vlees','Vis']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif text.isdigit():
-          print(text)
-          text = int(text)
-          if text == 2:
-              message = 'Wilt u een voor- of een nagerecht?'
-              data = messageSend(recipient,message, token,data)
-              quicks = ['Voorgerecht','Nagerecht']
-              sendQuicks(recipient, message, quicks)
-              mg.updateUser(recipient, data)
-          elif text == 4:
-              data['gangen'] = ['Amuse', 'Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-          elif text == 3:
-              print(text)
-              data['gangen'] = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-          elif text == 1:
-              data['gangen'] = ['Hoofdgerecht']
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-      elif text == 'Voorgerecht':
-          data['gangen'] = ['Voorgerecht', 'Hoofdgerecht']
+      elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?':
+          message = 'En als het gaat om het dessert, waar zit je dan aan te denken?'
+          data = messageSend(recipient,message, token,data)
+          data['data']['voorkeur'] = text
+        #   quicks = ['Vegetarisch', 'Vlees','Vis']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          sendTexts(recipient, message)
           mg.updateUser(recipient, data)
-          findToken(recipient, data, text)
-      elif text == 'Nagerecht':
-          data['gangen'] = ['Hoofdgerecht', 'Nagerecht']
+      elif data['oldmessage'] == 'En als het gaat om het dessert, waar zit je dan aan te denken?':
+          message = 'Lekker! heb je bepaalde smaken in gedachten?'
+          data = messageSend(recipient,message, token,data)
+          data['data']['Nagerecht'] = text
+        #   quicks = ['Vegetarisch', 'Vlees','Vis']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          sendTexts(recipient, message)
           mg.updateUser(recipient, data)
-          findToken(recipient, data, text)
+      else:
+          data['data']['NagerechtSmaak'] = text
+          mg.updateUser(recipient, data)
+          findToken(recipient, data, '')
   elif data['Stage'] == 'Gangen' and data['type'] == 'gang':
       if text == 'gang':
-          message = 'Welke gang moet u nog aanvullen?'
+          message = 'Voor welke gang heb je inspiratie nodig?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Amuse', 'Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          quicks = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif text in ['Amuse', 'Voorgerecht', 'Hoofdgerecht', 'Nagerecht']:
-          data['gangen']= [text]
+      elif text in ['Voorgerecht', 'Hoofdgerecht']:
+          data['gang']= text
+          message = 'Ben je op zoek naar een vegetarisch gerecht, of toch liever vlees of vis?'
+          data = messageSend(recipient,message, token,data)
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          quicks = ['Vegetarisch', 'Vlees/Vis']
+          sendQuicks(recipient, message, quicks)
+          mg.updateUser(recipient, data)
+      elif text == 'Nagerecht':
+          message = 'Naar wat voor soort dessert ben je op zoek?'
+          data = messageSend(recipient,message, token,data)
+        #   data['data']['Nagerecht'] = text
+        #   quicks = ['Vegetarisch', 'Vlees','Vis']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          sendTexts(recipient, message)
+          mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Naar wat voor soort dessert ben je op zoek?':
+          message = 'Lekker! heb je bepaalde smaken in gedachten?'
+          data = messageSend(recipient,message, token,data)
+          data['data']['Nagerecht'] = text
+        #   quicks = ['Vegetarisch', 'Vlees','Vis']
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          sendTexts(recipient, message)
+          mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Lekker! heb je bepaalde smaken in gedachten?':
+          data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
+      else:
+          mg.updateUser(recipient, data)
+          findToken(recipient, data, text)
+  elif data['Stage'] == 'Keuzes':
+      if text == 'Keuze':
+          message = 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?'
+          data = messageSend(recipient,message, token,data)
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          quicks = ['Amateur', 'Sterrenchef']
+
+          sendQuicks(recipient, message, quicks)
+          mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?':
+          data['data']['level'] = text
+          if data['data']['gang'] != ['Nagerecht']:
+              message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
+              data = messageSend(recipient,message, token,data)
+            #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+              quicks = ['Grillen', 'Oven', 'Wokken']
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+          else:
+              message = 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.'
+              data = messageSend(recipient,message, token,data)
+            #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+              quicks = ['Grillen', 'Oven', 'Wokken']
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
+          data['data']['technique'] = text
+          message = 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.'
+          data = messageSend(recipient,message, token,data)
+        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+          quicks = ['Grillen', 'Oven', 'Wokken']
+          sendQuicks(recipient, message, quicks)
+          mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.':
+          data['data']['people'] = re.sub(r"\D", "", text)
+          mg.updateUser(recipient, data)
+          indToken(recipient, data, text)
+
+
   elif data['Stage'] == 'Presentatie':
       if text == 'presentatie':
           if presentMeal(token, recipient, data,8):

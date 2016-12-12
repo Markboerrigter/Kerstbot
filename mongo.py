@@ -10,6 +10,12 @@ db = client.kerstbot
 now = datetime.datetime.now()
 d = now.isoformat()
 
+file  = open('data.json', 'r+')
+file = file.read()
+data = json.loads(file)
+for x in data:
+    print(x)
+
 def logging(log):
     try:
         catalogus = db.conversations
