@@ -702,6 +702,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif text == 'Nagerecht':
+          data['gang']= text
           message = 'Naar wat voor soort dessert ben je op zoek?'
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
@@ -735,7 +736,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?':
           data['data']['level'] = text
-          if data['data']['gang'] != ['Nagerecht']:
+          if data['gang'] != ['Nagerecht']:
               message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
               data = messageSend(recipient,message, token,data)
               sendImage(recipient, 'https://s23.postimg.org/ehjth7hhn/IG_grill_oven.png')
