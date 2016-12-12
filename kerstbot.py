@@ -323,7 +323,7 @@ def presentMeal(token, recipient, data):
             meal1 = meals[0][0]
             meal2 = meals[1][0]
             meal3 = meals[2][0]
-            postdashbot('bot',(recipient,'meal: '+ meal1['titel']+ meal2['titel']+ meal3['titel'], data['message-id']) )
+            postdashbot('bot',(recipient,'meal: '+ meal1['Title']+ meal2['Title']+ meal3['Title'], data['message-id']) )
             data['presented'].extend([meal1, meal2, meal3])
             data['ideeen'][0].remove(meal1)
             data['ideeen'][1].remove(meal2)
@@ -362,13 +362,13 @@ def presentMeal(token, recipient, data):
         else:
             meal = meals[0]
             data['ideeen'].remove(meal)
-            postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
+            postdashbot('bot',(recipient,'meal: '+ meal['Title'], data['message-id']) )
             data['presented'].append(meal)
             typing('off', PAT, recipient)
             sendTemplate(recipient, ['''{
-                "title":"'''+ meal['titel']+ '''",
-                "item_url":"'''+ meal['afbeelding']+ '''",
-                "image_url":"'''+ meal['afbeelding']+ '''",
+                "title":"'''+ meal['Title']+ '''",
+                "item_url":"'''+ meal['Link gerecht']+ '''",
+                "image_url":"'''+ meal['Link afbeelding']+ '''",
                 "buttons":[
                   {
                     "type":"web_url",
