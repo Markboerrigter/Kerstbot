@@ -44,13 +44,13 @@ def addProduct(inf):
     except Exception, e:
         return 'Not found user because ',e
 
-file  = open('data.json', 'r+')
-file = file.read()
-data = json.loads(file)
-for x in data:
-    dat = data[x]
-    dat.update({'Title': x})
-    addProduct(dat)
+# file  = open('data.json', 'r+')
+# file = file.read()
+# data = json.loads(file)
+# for x in data:
+#     dat = data[x]
+#     dat.update({'Title': x})
+#     addProduct(dat)
 
 # f = open('products.json','rb')
 # f = f.read()

@@ -704,6 +704,7 @@ def send_message(token, recipient, text, data):
       elif text == 'Nagerecht':
           data['gang']= text
           message = 'Naar wat voor soort dessert ben je op zoek?'
+          sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
         #   quicks = ['Vegetarisch', 'Vlees','Vis']
@@ -714,7 +715,7 @@ def send_message(token, recipient, text, data):
           message = 'Lekker! heb je bepaalde smaken in gedachten?'
           data = messageSend(recipient,message, token,data)
           data['data']['Nagerecht'] = text
-          sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
+
         #   quicks = ['Vegetarisch', 'Vlees','Vis']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
@@ -755,8 +756,7 @@ def send_message(token, recipient, text, data):
           message = 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.'
           data = messageSend(recipient,message, token,data)
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-          quicks = ['Grillen', 'Oven', 'Wokken']
-          sendQuicks(recipient, message, quicks)
+          sendTexts(recipient, message)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.':
           data['data']['people'] = re.sub(r"\D", "", text)
