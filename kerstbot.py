@@ -314,8 +314,14 @@ def getFeedback(data):
 def presentMeal(token, recipient, data):
     if 'ideeen' in data:
         meals = [x for x in data['ideeen']]
+
     else:
-        meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
+        if 'NagerechtSmaak' not in  data['data']:
+            meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
+        elif 'voorkeur' not in  data['data']:
+            meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],'')
+        else:
+            meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
         data['ideeen'] = meals
     meals = [x for x in meals if x not in data['presented']]
     if meals:
