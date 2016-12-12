@@ -103,7 +103,7 @@ def sendTemplate(sender, buttons):
               "type":"template",
               "payload":{
                 "template_type":"generic",
-                "elements": buttons
+                "elements": [x for x in buttons]
               }
             }
           }
