@@ -312,12 +312,13 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data,n):
-    if data['ideeën']:
+    if data['ideeen']:
         meals = [x for x in data['ideeën'] if x not in data['presented']]
     else:
         Ingredient = data['data']['Ingredient']
         print(Ingredient)
         meals = mg.findRightProduct(Ingredient)[:n]
+        data['ideeen'] = meals
         print(meals)
     meals = [x for x in meals if x not in data['presented']]
     if meals:
