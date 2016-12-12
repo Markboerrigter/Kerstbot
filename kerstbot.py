@@ -702,7 +702,7 @@ def send_message(token, recipient, text, data):
       if text == 'menu':
           message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Vegetarisch', 'Vlees','Vis']
+          quicks = ['Vlees','Vis','Vegetarisch']
           sendImage(recipient, 'https://s23.postimg.org/m5bbd95jf/IG_vlees_vega.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
@@ -718,7 +718,7 @@ def send_message(token, recipient, text, data):
           message = 'Lekker! heb je bepaalde smaken in gedachten?'
           data = messageSend(recipient,message, token,data)
           data['data']['Nagerecht'] = text
-          quicks = ['Vegetarisch', 'Vlees','Vis']
+          quicks = [ 'Vlees','Vis','Vegetarisch']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
@@ -828,7 +828,7 @@ def send_message(token, recipient, text, data):
           time.sleep(1.5)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-          findToken(recipient, data, '')
+        #   findToken(recipient, data, '')
       elif text == 'Nee':
           if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
@@ -844,6 +844,8 @@ def send_message(token, recipient, text, data):
               time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!':
+          findToken(recipient, data, '')
   # elif data['Stage'] =='Chitchat':
   #     if text == 'chitchat':
   #         message = random.choice(Chitchat)
