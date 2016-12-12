@@ -312,7 +312,7 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data,n):
-    if data['ideeen']:
+    if 'ideeen' in data:
         meals = [x for x in data['ideeen'] if x not in data['presented']]
     else:
         Ingredient = data['data']['Ingredient']
@@ -748,7 +748,6 @@ def send_message(token, recipient, text, data):
               message = 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.'
               data = messageSend(recipient,message, token,data)
             #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-              quicks = ['Grillen', 'Oven', 'Wokken']
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
