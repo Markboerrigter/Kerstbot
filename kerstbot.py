@@ -315,14 +315,11 @@ def presentMeal(token, recipient, data):
     if 'ideeen' in data:
         meals = [x for x in data['ideeen']]
     else:
-        Ingredient = data['data']['Ingredient']
-        print(Ingredient)
         meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
         data['ideeen'] = meals
-        print(meals)
     meals = [x for x in meals if x not in data['presented']]
     if meals:
-        if isinstance(meals[0], collections.MutableSequence):
+        if isinstance(meals[0], list):
             meal1 = meals[0][0]
             meal2 = meals[1][0]
             meal3 = meals[2][0]
@@ -711,7 +708,7 @@ def send_message(token, recipient, text, data):
           message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
           data = messageSend(recipient,message, token,data)
           data['data']['voorkeur'] = text
-          quicks = ['ijs', 'Cake']
+          quicks = ['Cake', 'Ijs']
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
