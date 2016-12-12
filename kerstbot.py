@@ -722,7 +722,7 @@ def send_message(token, recipient, text, data):
           data = messageSend(recipient,message, token,data)
           data['data']['Nagerecht'] = text
           quicks = [ 'Vlees','Vis','Vegetarisch']
-        #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+        #   sendImage(voKeuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
       else:
@@ -743,7 +743,7 @@ def send_message(token, recipient, text, data):
           message = 'Ben je op zoek naar een vegetarisch gerecht, of toch liever vlees of vis?'
           data = messageSend(recipient,message, token,data)
           sendImage(recipient, 'https://s23.postimg.org/m5bbd95jf/IG_vlees_vega.png')
-          quicks = ['Vlees/Vis','Vegetarisch']
+          quicks = ['Vlees', 'Vis', 'Vegetarisch']
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif text == 'Nagerecht':
@@ -758,6 +758,10 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Naar wat voor soort dessert ben je op zoek?':
           data['data']['NagerechtSmaak'] = text
+          mg.updateUser(recipient, data)
+          findToken(recipient, data, text)
+      elif data['oldmessage'] == 'Ben je op zoek naar een vegetarisch gerecht, of toch liever vlees of vis?':
+          data['data']['voorkeur'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
       else:
