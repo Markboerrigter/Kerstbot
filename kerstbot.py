@@ -312,12 +312,14 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data,n):
-    Ingredient = data['data']['Ingredient']
-    print(Ingredient)
-    meals = mg.findRightProduct(Ingredient)[:n]
-    print(meals)
+    if data['ideeën']:
+        meals = [x for x in data['ideeën'] if x not in data['presented']]
+    else:
+        Ingredient = data['data']['Ingredient']
+        print(Ingredient)
+        meals = mg.findRightProduct(Ingredient)[:n]
+        print(meals)
     meals = [x for x in meals if x not in data['presented']]
-    print(meals)
     if meals:
         meal = meals[0]
         postdashbot('bot',(recipient,'meal: '+ meal['titel'], data['message-id']) )
@@ -756,13 +758,11 @@ def send_message(token, recipient, text, data):
       elif data['oldmessage'] == 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.':
           data['data']['people'] = re.sub(r"\D", "", text)
           mg.updateUser(recipient, data)
-          indToken(recipient, data, text)
-
-
+          findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
       if text == 'presentatie':
           if presentMeal(token, recipient, data,8):
-              message = 'Is dit wat u zoekt?'
+              message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
               time.sleep(1.5)
@@ -775,11 +775,35 @@ def send_message(token, recipient, text, data):
               time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
-      if data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
+
+      elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
           if text == 'Ja':
               findToken(recipient, data, 'again')
           elif text == 'Nee':
               findToken(recipient, data, 'ending')
+      elif text == 'Ja':
+          message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
+          data = messageSend(recipient,message, token,data)
+          quicks = ['Ja', 'Nee']
+          time.sleep(1.5)
+          sendQuicks(recipient, message, quicks)
+          mg.updateUser(recipient, data)
+          findToken(recipient, data, '')
+      elif text == 'Nee':
+          if presentMeal(token, recipient, data,8):
+              message = 'Lijkt dit je lekker?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
+              time.sleep(1.5)
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+          else:
+              message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
+              time.sleep(1.5)
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
   elif data['Stage'] =='Chitchat':
       if text == 'chitchat':
           message = random.choice(Chitchat)
@@ -820,7 +844,14 @@ def send_message(token, recipient, text, data):
       else:
           findToken(recipient, data, text)
   elif data['Stage'] == 'Afscheid':
-      message = random.choice(responsemessage)
+      if 'Feedback' in data['data']:
+          if int(data['data']['Feedback']) > 2:
+              message = 'Ik vond het ook gezellig!'
+          else:
+              message = 'Jammer dat je het niet zo leuk vond, ik hoop dat je wel geniet van het feest!'
+          data = messageSend(recipient,message, token,data)
+          sendTexts(recipient, message)
+      message = 'Veel succes met de voorbereidingen en heel veel plezier bij het diner. Eet smakelijk!'
       data = messageSend(recipient,message, token,data)
       sendTexts(recipient, message)
       data['dolog'] = 'end'
