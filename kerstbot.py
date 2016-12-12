@@ -844,45 +844,45 @@ def send_message(token, recipient, text, data):
               time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
-  elif data['Stage'] =='Chitchat':
-      if text == 'chitchat':
-          message = random.choice(Chitchat)
-          data['chitchat'].append(message)
-          data = messageSend(recipient,message, token,data)
-          quicks = ['Ja', 'Nee']
-          sendQuicks(recipient, message, quicks)
-          mg.updateUser(recipient, data)
-      elif data['oldmessage'] == data['chitchat'][-1]:
-          index = Chitchat.index(data['oldmessage'])
-          if index == 0:
-              if text == 'Ja':
-                  message = 'Het is ook al bijna zover!'
-              elif text == 'Nee':
-                  message = 'Oke, hopelijk komt het snel!'
-              data = messageSend(recipient,message, token,data)
-              sendTexts(recipient, message)
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-          elif index == 1:
-              if isEten(text):
-                  message = 'Dat klinkt lekker!'
-              else:
-                  message = 'Dat ken ik nog niet'
-              data = messageSend(recipient,message, token,data)
-              sendTexts(recipient, message)
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-          elif index == 2:
-              if text == 'Ja':
-                  message = 'Ik vind dat altijd zo gezellig!'
-              elif text == 'Nee':
-                  message = 'Je moet er nog wel 1 kopen hoor!'
-              data = messageSend(recipient,message, token,data)
-              sendTexts(recipient, message)
-              mg.updateUser(recipient, data)
-              findToken(recipient, data, text)
-      else:
-          findToken(recipient, data, text)
+  # elif data['Stage'] =='Chitchat':
+  #     if text == 'chitchat':
+  #         message = random.choice(Chitchat)
+  #         data['chitchat'].append(message)
+  #         data = messageSend(recipient,message, token,data)
+  #         quicks = ['Ja', 'Nee']
+  #         sendQuicks(recipient, message, quicks)
+  #         mg.updateUser(recipient, data)
+  #     elif data['oldmessage'] == data['chitchat'][-1]:
+  #         index = Chitchat.index(data['oldmessage'])
+  #         if index == 0:
+  #             if text == 'Ja':
+  #                 message = 'Het is ook al bijna zover!'
+  #             elif text == 'Nee':
+  #                 message = 'Oke, hopelijk komt het snel!'
+  #             data = messageSend(recipient,message, token,data)
+  #             sendTexts(recipient, message)
+  #             mg.updateUser(recipient, data)
+  #             findToken(recipient, data, text)
+  #         elif index == 1:
+  #             if isEten(text):
+  #                 message = 'Dat klinkt lekker!'
+  #             else:
+  #                 message = 'Dat ken ik nog niet'
+  #             data = messageSend(recipient,message, token,data)
+  #             sendTexts(recipient, message)
+  #             mg.updateUser(recipient, data)
+  #             findToken(recipient, data, text)
+  #         elif index == 2:
+  #             if text == 'Ja':
+  #                 message = 'Ik vind dat altijd zo gezellig!'
+  #             elif text == 'Nee':
+  #                 message = 'Je moet er nog wel 1 kopen hoor!'
+  #             data = messageSend(recipient,message, token,data)
+  #             sendTexts(recipient, message)
+  #             mg.updateUser(recipient, data)
+  #             findToken(recipient, data, text)
+  #     else:
+  #         findToken(recipient, data, text)
   elif data['Stage'] == 'Afscheid':
       if 'Feedback' in data['data']:
           if int(data['data']['Feedback']) > 2:
