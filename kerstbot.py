@@ -313,7 +313,7 @@ def getFeedback(data):
 
 def presentMeal(token, recipient, data,n):
     if data['ideeen']:
-        meals = [x for x in data['ideeën'] if x not in data['presented']]
+        meals = [x for x in data['ideeen'] if x not in data['presented']]
     else:
         Ingredient = data['data']['Ingredient']
         print(Ingredient)
