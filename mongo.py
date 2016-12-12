@@ -199,10 +199,10 @@ def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
             meals.append(findForGang(Ingredient, dessertKind, technique, level, x,vega))
     return meals
 
-x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
-
-for y in x :
-    print(y['Title'])
+# x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
+#
+# for y in x :
+#     print(y['Title'])
 
 def printprod(L):
     for x in L:
