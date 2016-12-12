@@ -356,7 +356,8 @@ def presentMeal(token, recipient, data):
                                 "type":"web_url",
                                 "url": "http://www.lidl.nl/nl/index.htm",
                                 "title":"Bekijk het recept!"
-                              }]}'''
+                              }]}
+                              '''
                   ])
             mg.updateUser(recipient, data)
         else:
