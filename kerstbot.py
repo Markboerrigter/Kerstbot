@@ -330,7 +330,7 @@ def presentMeal(token, recipient, data):
             data['presented'].extend([meal1, meal2, meal3])
             data['ideeen'][0].remove(meal1)
             data['ideeen'][1].remove(meal2)
-            data['ideeen'][2].remove(meal3)
+            data['ideeen'][2].remove(meal3cake)
             typing('off', PAT, recipient)
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal1['titel']+ '''",
@@ -395,6 +395,7 @@ def findToken(recipient, data, text):
           send_message(PAT, recipient, 'gang', data)
       elif text == 'Een menu':
           data['type'] = 'menu'
+          data['gang'] = ['Voorgerecht', 'Hoofdgerecht','Nagerecht']
           NextStage = TokenStages[TokenStages.index(Stage)+1]
         #   data['token'] = 'personality'
         #   data['chitchat'].append(data['token'])
@@ -749,7 +750,7 @@ def send_message(token, recipient, text, data):
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
-        #   quicks = ['Vegetarisch', 'Vlees','Vis']
+          quicks = ['ijs', 'Cake']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
