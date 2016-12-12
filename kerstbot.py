@@ -710,7 +710,7 @@ def send_message(token, recipient, text, data):
               time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
-      if data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+      if data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
           if text == 'Ja':
               findToken(recipient, data, 'again')
           elif text == 'Nee':
