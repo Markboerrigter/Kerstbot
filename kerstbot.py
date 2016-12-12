@@ -696,7 +696,7 @@ def send_message(token, recipient, text, data):
           findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
       if text == 'presentatie':
-          if presentMeal(token, recipient, data,8)
+          if presentMeal(token, recipient, data,8):
               message = 'Is dit wat u zoekt?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
