@@ -1,6 +1,7 @@
 import requests
 
-
+import os
+PAT = os.environ['PAT']
 def sendQuicks(sender, mess, quicks):
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",
     params={"access_token": PAT},
