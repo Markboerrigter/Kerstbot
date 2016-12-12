@@ -760,6 +760,10 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.':
           data['data']['people'] = re.sub(r"\D", "", text)
+          message = 'Ik weet genoeg! Ik ga voor je op zoek. Ben zo terug!'
+          data = messageSend(recipient,message, token,data)
+          sendTexts(recipient, message)
+          mg.updateUser(recipient, data)
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
