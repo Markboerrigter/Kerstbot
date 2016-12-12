@@ -433,10 +433,13 @@ def findToken(recipient, data, text):
           findToken(recipient, data, text)
       else:
           NextStage = TokenStages[TokenStages.index(Stage)+1]
+          data['token'] = random.choice(allValues(Tokens[NextStage]))
+          if isinstance(data['token'], dict):
+              data['token'] = random.choice(allValues(Tokens[NextStage]))
+              data['starter'] = get_keys(Tokens, data['token'])[-1]
           data['Stage'] = NextStage
-          response = {}
           mg.updateUser(recipient, data)
-          send_message(PAT, recipient, 'chitchat', data)
+          send_message(PAT, recipient, data['starter'], data)
   elif Stage == 'Feedback':
       NextStage = TokenStages[TokenStages.index(Stage)+1]
       data['Stage'] = NextStage
