@@ -1,5 +1,5 @@
 import requests
-
+import json
 import os
 PAT = os.environ['PAT']
 def sendQuicks(sender, mess, quicks):
