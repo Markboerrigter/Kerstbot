@@ -317,7 +317,7 @@ def presentMeal(token, recipient, data):
     else:
         Ingredient = data['data']['Ingredient']
         print(Ingredient)
-        meals = mg.findRightProduct(Ingredient)
+        meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
         data['ideeen'] = meals
         print(meals)
     meals = [x for x in meals if x not in data['presented']]
@@ -787,13 +787,13 @@ def send_message(token, recipient, text, data):
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
           data['data']['technique'] = text
-          message = 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.'
+          message = 'Heb je nog bepaalde ingredienten die je wil gebruiken?'
           data = messageSend(recipient,message, token,data)
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Tot slot ben ik nog benieuwd voor hoeveel personen je gaat koken.':
-          data['data']['people'] = re.sub(r"\D", "", text)
+      elif data['oldmessage'] == 'Heb je nog bepaalde ingredienten die je wil gebruiken?':
+          data['data']['Ingredient'] = text
           message = 'Ik weet genoeg! Ik ga voor je op zoek. Ben zo terug!'
           data = messageSend(recipient,message, token,data)
           sendTexts(recipient, message)
