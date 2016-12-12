@@ -327,7 +327,7 @@ def presentMeal(token, recipient, data):
             data['presented'].extend([meal1, meal2, meal3])
             data['ideeen'][0].remove(meal1)
             data['ideeen'][1].remove(meal2)
-            data['ideeen'][2].remove(meal3cake)
+            data['ideeen'][2].remove(meal3)
             typing('off', PAT, recipient)
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal1['Title']+ '''",
