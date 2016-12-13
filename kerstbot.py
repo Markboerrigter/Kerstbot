@@ -314,7 +314,6 @@ def getFeedback(data):
 def presentMeal(token, recipient, data):
     if 'ideeen' in data:
         meals = [x for x in data['ideeen']]
-
     else:
         if 'NagerechtSmaak' not in  data['data']:
             meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
@@ -325,8 +324,6 @@ def presentMeal(token, recipient, data):
         data['ideeen'] = meals
     meals = [x for x in meals if x not in data['presented']]
     if meals:
-        print(meals)
-        print(meals[0])
         if isinstance(meals[0], list):
             meal1 = meals[0][0]
             meal2 = meals[1][0]
@@ -505,6 +502,7 @@ def handle_messages():
             data['chitchat'] = []
             data['trig'] = False
             data['meals'] = []
+            data['gang'] = ''
             data['oldincoming'] = message
             data['oldmessage'] = ''
             data['messagenumber'] = 1
@@ -587,10 +585,14 @@ def handle_messages():
                             log['feedback']= (data['data']['Feedback'])
                         else:
                             log['feedback']= ('0')
+                        if data['type']:
+                            log['type'] = data['type']
+                        if data['info']:
+                            log['info']'= data['info']
                         if data['data']:
                             log['data']= (data['data'])
-                        if data['meals']:
-                            log['meals']=(data['meals'])
+                        if data['presented']:
+                            log['presented']=(data['presented'])
                         if data['text']:
                             log['text'] = data['text']
                         log['id'] = sender
@@ -599,7 +601,9 @@ def handle_messages():
                         data['text'] = []
                         if len (data['chitchat']) > 3:
                             data['chitchat'] = []
-                        data['dolog'] = ''
+                        data['dolog'] = 'again'
+                        data['gang'] = ''
+                        data['meals'] = []
                         data['trig'] = False
                         data['token'] = '2'
                         data['starter'] = ''
@@ -697,6 +701,17 @@ def send_message(token, recipient, text, data):
   elif data['Stage'] == 'Welkom':
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
+    elif data['dolog'] = 'again':
+        message = 'Welkom terug  ' + data['info']['first_name']+ '! Wat leuk dat je er weer bent :)'
+        data = messageSend(recipient,message, token,data)
+        sendTexts(recipient, message)
+        message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
+        data = messageSend(recipient,message, token,data)
+        quicks = ['Een gang', 'Een menu']
+        sendImage(recipient, 'https://s23.postimg.org/v1hi3g6rv/IG_1gang_meergang.png')
+        sendQuicks(recipient, message, quicks)
+        data['dolog'] = ''
+        mg.updateUser(recipient, data)
     else:
         # message = random.choice(startmessage)
         message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor de kerstdagen.'
@@ -845,6 +860,11 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
         #   findToken(recipient, data, '')
       elif text == 'Nee':
+              message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeën. Momentje..'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
+              time.sleep(1.5)
+              sendQuicks(recipient, message, quicks)
           if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
