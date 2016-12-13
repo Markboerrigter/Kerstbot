@@ -854,17 +854,16 @@ def send_message(token, recipient, text, data):
       elif text == 'Ja':
           message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Ja', 'Nee']
+        #   quicks = ['Ja', 'Nee']
           time.sleep(1.5)
-          sendQuicks(recipient, message, quicks)
+          sendTexts(recipient, message)
           mg.updateUser(recipient, data)
-        #   findToken(recipient, data, '')
+          findToken(recipient, data, '')
       elif text == 'Nee':
           message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeen. Momentje..'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Ja', 'Nee']
           time.sleep(1.5)
-          sendQuicks(recipient, message, quicks)
+          sendTexts(recipient, message)
           if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
@@ -880,6 +879,8 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!':
+          findToken(recipient, data, '')
+      else:
           findToken(recipient, data, '')
   # elif data['Stage'] =='Chitchat':
   #     if text == 'chitchat':
