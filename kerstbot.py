@@ -588,7 +588,7 @@ def handle_messages():
                         if data['type']:
                             log['type'] = data['type']
                         if data['info']:
-                            log['info']'= data['info']
+                            log['info']= data['info']
                         if data['data']:
                             log['data']= (data['data'])
                         if data['presented']:
@@ -701,7 +701,7 @@ def send_message(token, recipient, text, data):
   elif data['Stage'] == 'Welkom':
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
-    elif data['dolog'] = 'again':
+    elif data['dolog'] == 'again':
         message = 'Welkom terug  ' + data['info']['first_name']+ '! Wat leuk dat je er weer bent :)'
         data = messageSend(recipient,message, token,data)
         sendTexts(recipient, message)
@@ -860,11 +860,11 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
         #   findToken(recipient, data, '')
       elif text == 'Nee':
-              message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeën. Momentje..'
-              data = messageSend(recipient,message, token,data)
-              quicks = ['Ja', 'Nee']
-              time.sleep(1.5)
-              sendQuicks(recipient, message, quicks)
+          message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeen. Momentje..'
+          data = messageSend(recipient,message, token,data)
+          quicks = ['Ja', 'Nee']
+          time.sleep(1.5)
+          sendQuicks(recipient, message, quicks)
           if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
