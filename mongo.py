@@ -191,6 +191,7 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
     return finalScore
 
 def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
+    print(Ingredient, dessertKind, technique, level, gang,vega)
     if isinstance(gang,str):
         meals = findForGang(Ingredient, dessertKind, technique, level, gang,vega)
     else:
@@ -199,10 +200,13 @@ def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
             meals.append(findForGang(Ingredient, dessertKind, technique, level, x,vega))
     return meals
 
+
+x = findRightProduct('zalm', '', 'Wokken', 'Sterrenchef', 'Voorgerecht','Vis')
+
 # x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
 #
-# for y in x :
-#     print(y['Title'])
+for y in x :
+    print(y['Title'])
 
 def printprod(L):
     for x in L:
