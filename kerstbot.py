@@ -325,6 +325,8 @@ def presentMeal(token, recipient, data):
         data['ideeen'] = meals
     meals = [x for x in meals if x not in data['presented']]
     if meals:
+        print(meals)
+        print(meals[0])
         if isinstance(meals[0], list):
             meal1 = meals[0][0]
             meal2 = meals[1][0]
