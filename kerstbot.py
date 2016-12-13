@@ -28,6 +28,7 @@ Tokens = mg.findConfig(25)
 Triggers = mg.findConfig(50)
 startmessage = mg.findConfig(51)
 Chitchat = mg.findConfig(52)
+finalResponses = mg.findConfig(53)
 # extraChitchat = mg.findConfig(53)
 TriggerPhrases = Triggers['tigger']
 TriggerCats = Triggers['answers']
@@ -580,35 +581,38 @@ def handle_messages():
                 elif mid != data['message-id']:
                     typing('on', PAT, sender)
                     if data['dolog'] == 'end':
-                        log = {}
-                        if 'Feedback' in data['data']:
-                            log['feedback']= (data['data']['Feedback'])
+                        if text in finalResponses:
+                            print('no response')
                         else:
-                            log['feedback']= ('0')
-                        if data['type']:
-                            log['type'] = data['type']
-                        if data['info']:
-                            log['info']= data['info']
-                        if data['data']:
-                            log['data']= (data['data'])
-                        if data['presented']:
-                            log['presented']=(data['presented'])
-                        if data['text']:
-                            log['text'] = data['text']
-                        log['id'] = sender
-                        mg.logging(log)
-                        data['Stage'] = TokenStages[0]
-                        data['text'] = []
-                        if len (data['chitchat']) > 3:
-                            data['chitchat'] = []
-                        data['dolog'] = 'again'
-                        data['gang'] = ''
-                        data['meals'] = []
-                        data['trig'] = False
-                        data['token'] = '2'
-                        data['starter'] = ''
-                        data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
-                        data['data'] = {}
+                            log = {}
+                            if 'Feedback' in data['data']:
+                                log['feedback']= (data['data']['Feedback'])
+                            else:
+                                log['feedback']= ('0')
+                            if data['type']:
+                                log['type'] = data['type']
+                            if data['info']:
+                                log['info']= data['info']
+                            if data['data']:
+                                log['data']= (data['data'])
+                            if data['presented']:
+                                log['presented']=(data['presented'])
+                            if data['text']:
+                                log['text'] = data['text']
+                            log['id'] = sender
+                            mg.logging(log)
+                            data['Stage'] = TokenStages[0]
+                            data['text'] = []
+                            if len (data['chitchat']) > 3:
+                                data['chitchat'] = []
+                            data['dolog'] = 'again'
+                            data['gang'] = ''
+                            data['meals'] = []
+                            data['trig'] = False
+                            data['token'] = '2'
+                            data['starter'] = ''
+                            data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
+                            data['data'] = {}
                     data['text'].append(('user',message))
                     data['message-id'] = mid
                     data['oldincoming'] = message
@@ -697,7 +701,8 @@ def send_message(token, recipient, text, data):
   """Send the message text to recipient with id recipient.
   """
   if data['dolog'] == 'end':
-      print('done')
+      if text in finalResponses:
+          print('done')
   elif data['Stage'] == 'Welkom':
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
