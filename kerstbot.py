@@ -718,8 +718,7 @@ def send_message(token, recipient, text, data):
   """Send the message text to recipient with id recipient.
   """
   if data['dolog'] == 'end':
-      if text in finalResponses:
-          print('done')
+      print('done')
   elif data['Stage'] == 'Welkom':
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
