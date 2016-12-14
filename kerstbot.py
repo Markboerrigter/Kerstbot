@@ -450,10 +450,10 @@ def findToken(recipient, data, text):
       send_message(PAT, recipient, 'presentatie', data)
   elif Stage == 'Presentatie':
       if text == 'again':
-          data[ 'data'] = []
-          data['Stage'] = 'Keuzes'
+          data['data'] = []
+          data['Stage'] = 'Welkom'
           mg.updateUser(recipient, data)
-          findToken(recipient, data, text)
+          findToken(recipient, data, 'ta')
       elif text == 'end':
           NextStage = TokenStages[-1]
           data['Stage'] = NextStage
@@ -739,6 +739,13 @@ def send_message(token, recipient, text, data):
         sendQuicks(recipient, message, quicks)
         data['dolog'] = ''
         mg.updateUser(recipient, data)
+    elif text == 'ta':
+        message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
+        data = messageSend(recipient,message, token,data)
+        quicks = ['Een gang', 'Een menu']
+        sendImage(recipient, 'https://s23.postimg.org/v1hi3g6rv/IG_1gang_meergang.png')
+        sendQuicks(recipient, message, quicks)
+        mg.updateUser(recipient, data)
     else:
         # message = random.choice(startmessage)
         message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor het kerstdiner.'
@@ -882,14 +889,15 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'We hebben helaas niks gevonden dat aan uw wensen voldoet \n Wilt u het opnieuw proberen?'
+              message = 'We hebben helaas niks gevonden dat aan uw wensen voldoet \nWilt u het opnieuw proberen?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
 
-      elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen voldoet \n Wilt u het opnieuw proberen?':
+      elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen voldoet \nWilt u het opnieuw proberen?':
           if text == 'Ja':
+              print('again')
               findToken(recipient, data, 'again')
           elif text == 'Nee':
               findToken(recipient, data, 'ending')
@@ -901,7 +909,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
       elif text == 'Nee':
-          message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeen. Momentje..'
+          message = 'Bedankt voor je reactie. Ik ga even op zoek naar nieuwe ideeen. Momentje..'
           data = messageSend(recipient,message, token,data)
           sendTexts(recipient, message)
           if presentMeal(token, recipient, data):
