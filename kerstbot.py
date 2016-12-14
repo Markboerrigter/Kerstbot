@@ -314,19 +314,19 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data):
-    print(data['gang'])
+    print(data['data']['gang'])
     if 'ideeen' in data:
         meals = [x for x in data['ideeen']]
     else:
         if 'NagerechtSmaak' not in  data['data']:
-            meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
+            meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['data']['gang'],data['data']['voorkeur'])
         elif 'voorkeur' not in  data['data']:
             if 'technique'  not in data['data']:
-                meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], '', data['data']['level'], data['gang'],'')
+                meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], '', data['data']['level'], data['data']['gang'],'')
             else:
-                meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],'')
+                meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['data']['gang'],'')
         else:
-            meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
+            meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['data']['gang'],data['data']['voorkeur'])
         data['ideeen'] = meals
     meals = [x for x in meals if x not in data['presented']]
     if meals:
@@ -412,16 +412,16 @@ def findToken(recipient, data, text):
   oldToken = data['token']
   Stage = data['Stage']
   if Stage == 'Welkom':
-    #   data['type'] = text
+    #   data['data']['type'] = text
       if text == 'Een gang':
-          data['type'] = 'gang'
+          data['data']['type'] = 'gang'
           NextStage = TokenStages[TokenStages.index(Stage)+1]
           data['Stage'] = NextStage
           mg.updateUser(recipient, data)
           send_message(PAT, recipient, 'gang', data)
       elif text == 'Een menu':
-          data['type'] = 'menu'
-          data['gang'] = ['Voorgerecht', 'Hoofdgerecht','Nagerecht']
+          data['data']['type'] = 'menu'
+          data['data']['gang'] = ['Voorgerecht', 'Hoofdgerecht','Nagerecht']
           NextStage = TokenStages[TokenStages.index(Stage)+1]
         #   data['token'] = 'personality'
         #   data['chitchat'].append(data['token'])
@@ -453,7 +453,7 @@ def findToken(recipient, data, text):
           data['data'] = []
           data['Stage'] = 'Welkom'
           mg.updateUser(recipient, data)
-          findToken(recipient, data, 'ta')
+          send_message(PAT, recipient, 'ta', data)
       elif text == 'end':
           NextStage = TokenStages[-1]
           data['Stage'] = NextStage
@@ -524,7 +524,7 @@ def handle_messages():
             data['chitchat'] = []
             data['trig'] = False
             data['meals'] = []
-            data['gang'] = ''
+            data['data']['gang'] = ''
             data['oldincoming'] = message
             data['oldmessage'] = ''
             data['messagenumber'] = 1
@@ -610,12 +610,11 @@ def handle_messages():
                                 log['feedback']= (data['data']['Feedback'])
                             else:
                                 log['feedback']= ('0')
-                            if data['type']:
-                                log['type'] = data['type']
+                            if data['data']['type']:
+                                log['type'] = data['data']['type']
                             if data['info']:
                                 log['info']= data['info']
                             if data['data']:
-                                data['data']['gangen']= data['gang']
                                 log['data']= (data['data'])
                             if data['presented']:
                                 log['presented']=(data['presented'])
@@ -628,7 +627,7 @@ def handle_messages():
                             if len (data['chitchat']) > 3:
                                 data['chitchat'] = []
                             data['dolog'] = 'again'
-                            data['gang'] = ''
+                            data['data']['gang'] = ''
                             data['meals'] = []
                             data['ideeen'] = []
                             data['trig'] = False
@@ -757,7 +756,7 @@ def send_message(token, recipient, text, data):
         sendImage(recipient, 'https://s23.postimg.org/v1hi3g6rv/IG_1gang_meergang.png')
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
-  elif data['Stage'] == 'Gangen' and data['type'] == 'menu':
+  elif data['Stage'] == 'Gangen' and data['data']['type'] == 'menu':
       print(text)
       if text == 'menu':
           message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?'
@@ -803,7 +802,7 @@ def send_message(token, recipient, text, data):
           data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
-  elif data['Stage'] == 'Gangen' and data['type'] == 'gang':
+  elif data['Stage'] == 'Gangen' and data['data']['type'] == 'gang':
       if text == 'gang':
           message = 'Voor welke gang heb je inspiratie nodig?'
           data = messageSend(recipient,message, token,data)
@@ -813,7 +812,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif text in ['Voorgerecht', 'Hoofdgerecht']:
-          data['gang']= text
+          data['data']['gang']= text
           message = 'Ben je op zoek naar een vegetarisch gerecht, of toch liever vlees of vis?'
           data = messageSend(recipient,message, token,data)
           sendImage(recipient, 'https://s23.postimg.org/m5bbd95jf/IG_vlees_vega.png')
@@ -821,7 +820,7 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif text == 'Nagerecht':
-          data['gang']= text
+          data['data']['gang']= text
           message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
@@ -851,7 +850,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Vind jij jezelf een echte sterrenchef of hou je het liever wat eenvoudiger?':
           data['data']['level'] = text
-          if data['gang'] != 'Nagerecht':
+          if data['data']['gang'] != 'Nagerecht':
               message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
               data = messageSend(recipient,message, token,data)
               sendImage(recipient, 'https://s23.postimg.org/ehjth7hhn/IG_grill_oven.png')
