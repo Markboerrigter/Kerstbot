@@ -391,7 +391,7 @@ def presentMeal(token, recipient, data):
                 pag = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal['Pagina']
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal['Title']+ '''",
-                "item_url":"'''+ pag]+ '''",
+                "item_url":"'''+ pag+ '''",
                 "image_url":"'''+ meal['Link afbeelding']+ '''",
                 "buttons":[
                   {
