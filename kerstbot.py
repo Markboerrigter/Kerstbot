@@ -380,8 +380,7 @@ def presentMeal(token, recipient, data):
                     "type":"web_url",
                     "url": "'''+ pag3+ '''",
                     "title":"Bekijk het recept!"
-                  }]}
-                              '''])
+                  }]}'''])
             mg.updateUser(recipient, data)
         else:
             meal = meals[0]
