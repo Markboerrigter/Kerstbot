@@ -338,17 +338,17 @@ def presentMeal(token, recipient, data):
             typing('off', PAT, recipient)
             print(meal1)
             if meal1['Winkel'] == 'Jumbo':
-                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal1['Pagina']
+                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal1['Pagina'])
             else:
-                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal1['Pagina']
+                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal1['Pagina'])
             if meal2['Winkel'] == 'Jumbo':
-                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal2['Pagina']
+                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal2['Pagina'])
             else:
-                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal2['Pagina']
+                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal2['Pagina'])
             if meal3['Winkel'] == 'Jumbo':
-                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal3['Pagina']
+                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal3['Pagina'])
             else:
-                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal3['Pagina']
+                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal3['Pagina'])
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal1['Title']+ '''",
                 "item_url":"'''+ pag1+ '''",
@@ -388,9 +388,9 @@ def presentMeal(token, recipient, data):
             data['presented'].append(meal)
             typing('off', PAT, recipient)
             if meal['Winkel'] == 'Jumbo':
-                pag = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal['Pagina']
+                pag = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal['Pagina'])
             else:
-                pag = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal['Pagina']
+                pag = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal['Pagina'])
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal['Title']+ '''",
                 "item_url":"'''+ pag+ '''",
@@ -830,7 +830,7 @@ def send_message(token, recipient, text, data):
               message = 'Heb je nog bepaalde ingredienten die je wil gebruiken?'
               data = messageSend(recipient,message, token,data)
             #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-              sendQuicks(recipient, message, quicks)
+              sendTexts(recipient, message)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
           data['data']['technique'] = text
