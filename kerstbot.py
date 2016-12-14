@@ -838,7 +838,7 @@ def send_message(token, recipient, text, data):
           quicks = ['Sterrenchef','Amateur']
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?':
+      elif data['oldmessage'] == 'Vind jij jezelf een echte sterrenchef of hou je het liever wat eenvoudiger?':
           data['data']['level'] = text
           if data['gang'] != 'Nagerecht':
               message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
