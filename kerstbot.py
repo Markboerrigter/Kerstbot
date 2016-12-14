@@ -758,6 +758,7 @@ def send_message(token, recipient, text, data):
             time.sleep(1)
             sendTexts(recipient, message)
   elif data['Stage'] == 'Welkom':
+
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
     elif data['dolog'] == 'again':
@@ -779,15 +780,16 @@ def send_message(token, recipient, text, data):
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
     else:
-        message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor het kerstdiner.'
-        data = messageSend(recipient,message, token,data)
-        sendTexts(recipient, message)
-        message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
-        data = messageSend(recipient,message, token,data)
-        quicks = ['Een gang', 'Een menu']
-        sendImage(recipient, 'https://s23.postimg.org/v1hi3g6rv/IG_1gang_meergang.png')
-        sendQuicks(recipient, message, quicks)
-        mg.updateUser(recipient, data)
+        if data['oldmessage'] != 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?':
+            message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor het kerstdiner.'
+            data = messageSend(recipient,message, token,data)
+            sendTexts(recipient, message)
+            message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
+            data = messageSend(recipient,message, token,data)
+            quicks = ['Een gang', 'Een menu']
+            sendImage(recipient, 'https://s23.postimg.org/v1hi3g6rv/IG_1gang_meergang.png')
+            sendQuicks(recipient, message, quicks)
+            mg.updateUser(recipient, data)
   elif data['Stage'] == 'Gangen' and data['data']['type'] == 'menu':
       print(text)
       if text == 'menu':
