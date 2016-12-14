@@ -315,7 +315,7 @@ def getFeedback(data):
 
 def presentMeal(token, recipient, data):
     print(data['data']['gang'])
-    if 'ideeen' in data:
+    if data['ideeen']:
         print(data['data']['gang'])
         meals = [x for x in data['ideeen']]
     else:
