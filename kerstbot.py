@@ -273,6 +273,7 @@ def getInformation(response, tekst):
         x = '1'
     if int(x) > 0:
         out['Feedback'] = x
+        print('got feedback')
     if 'entities' in response:
         entities = response['entities']
         if 'Eten' in entities and entities['Eten'][0]['confidence'] > 0.8:
@@ -598,7 +599,7 @@ def handle_messages():
                 elif mid != data['message-id']:
                     typing('on', PAT, sender)
                     if data['dolog'] == 'end':
-                        if text in finalResponses:
+                        if message in finalResponses:
                             print('no response')
                         else:
                             log = {}
