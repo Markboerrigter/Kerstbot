@@ -180,8 +180,8 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
         if x in ideas:
             ind = find(x,titleQuery)[0]
             a+=titleQuery[ind[0]][1]
-        print(x)
-        print(voorkeurQuery)
+        # print(x)
+        # print(voorkeurQuery)
         if x in voorkeurQuery:
             a += 2
         if x in levelQuery:
