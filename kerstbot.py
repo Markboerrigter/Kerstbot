@@ -335,6 +335,7 @@ def presentMeal(token, recipient, data):
             data['ideeen'][1].remove(meal2)
             data['ideeen'][2].remove(meal3)
             typing('off', PAT, recipient)
+            print(meal1)
             if meal1['Winkel'] == 'Jumbo':
                 pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal1['Pagina']
             else:
