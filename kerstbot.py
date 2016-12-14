@@ -504,6 +504,7 @@ def isFood(text):
     if 'entities' in x:
         entities = x['entities']
         if 'Eten' in entities:
+            print(entities)
             return entities['Eten'][0]['value']
         else:
             return False
