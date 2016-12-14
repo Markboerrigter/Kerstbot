@@ -725,8 +725,9 @@ def send_message(token, recipient, text, data):
       print('done')
   elif text.lower() in thank_quotes:
             myunicode = u"\U0001f44b"
+            print(myunicode)
             emoji = myunicode.encode('utf-8')
-            message = =':) jij ook bedankt en een prettige dag.'
+            message = ':) jij ook bedankt en een prettige dag.'
             data = messageSend(recipient,message, token,data)
             time.sleep(1)
             sendTexts(recipient, message)
