@@ -761,14 +761,10 @@ def send_message(token, recipient, text, data):
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'En als het gaat om het dessert, waar zit je dan aan te denken?':
-          message = 'Lekker! heb je bepaalde smaken in gedachten?'
-          data = messageSend(recipient,message, token,data)
-          data['data']['Nagerecht'] = text
-          quicks = [ 'Vlees','Vis','Vegetarisch']
-        #   sendImage(voKeuze gebruiker (visueel): vegetarisch of vlees/vis)
-          sendTexts(recipient, message)
+      elif data['oldmessage'] == 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?':
+          data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
+          findToken(recipient, data, '')
       else:
           data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
@@ -800,7 +796,7 @@ def send_message(token, recipient, text, data):
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Naar wat voor soort dessert ben je op zoek?':
+      elif data['oldmessage'] == 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?':
           data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
@@ -821,7 +817,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?':
           data['data']['level'] = text
-          if data['gang'] != ['Nagerecht']:
+          if data['gang'] != 'Nagerecht':
               message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
               data = messageSend(recipient,message, token,data)
               sendImage(recipient, 'https://s23.postimg.org/ehjth7hhn/IG_grill_oven.png')
