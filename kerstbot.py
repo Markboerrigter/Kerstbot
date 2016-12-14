@@ -324,7 +324,6 @@ def presentMeal(token, recipient, data):
                 meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], '', data['data']['level'], data['gang'],'')
             else:
                 meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],'')
-
         else:
             meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['gang'],data['data']['voorkeur'])
         data['ideeen'] = meals
@@ -752,16 +751,37 @@ def send_message(token, recipient, text, data):
   elif data['Stage'] == 'Gangen' and data['type'] == 'menu':
       print(text)
       if text == 'menu':
-          message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?'
+          message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Vlees','Vis','Vegetarisch']
+          quicks = ['Vlees/Vis','Vegetarisch']
           sendImage(recipient, 'https://s23.postimg.org/m5bbd95jf/IG_vlees_vega.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, vlees of vis gerecht moet worden?':
+      elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?':
+
+          if text == 'Vlees/Vis':
+              message = 'Wil je dan Vlees, Vis of een combinatie?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Vis', 'Vis en Vlees', 'Vlees']
+              sendImage(recipient, 'https://s28.postimg.org/xft4djma5/IG_vis_vlees.png')
+              sendImage(recipient, 'https://s28.postimg.org/ux7fcv0jx/IG_visvlees.png')
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+          else:
+              data['data']['voorkeur'] = text
+              message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
+              data = messageSend(recipient,message, token,data)
+              quicks = ['Cake', 'Ijs']
+              sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
+              sendQuicks(recipient, message, quicks)
+              mg.updateUser(recipient, data)
+      elif data['oldmessage'] ==  'Wil je dan Vlees, Vis of een combinatie?':
+          if text == 'Vis en Vlees':
+              data['data']['voorkeur'] = ['Vis', 'Vlees']
+          else:
+              data['data']['voorkeur'] = text
           message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
           data = messageSend(recipient,message, token,data)
-          data['data']['voorkeur'] = text
           quicks = ['Cake', 'Ijs']
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           sendQuicks(recipient, message, quicks)

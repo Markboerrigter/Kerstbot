@@ -167,7 +167,10 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
     ideaQuery = findArticlesTitleAndDescription(Ingredient)
     titleQuery = findArticlesTitle(Ingredient)
     ideas = [x for [x,y] in titleQuery]
-    vegaQuery = findVega(vega)
+    if isinstance(vega, list):
+        vegaQuery = [x for y in [findVega(x) for x in vega] for x in y]
+    else:
+        vegaQuery = findVega(vega)
     finalScore = []
     for x in gangQuery:
         a = 0
