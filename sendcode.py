@@ -61,8 +61,7 @@ def sendButton(sender, mess, buttons):
     	print r.text
 
 def sendTexts(sender, mess):
-    for x in mess:
-        print(x)
+
     r = requests.post("https://graph.facebook.com/v2.6/me/messages",
     params={"access_token": PAT},
     data=json.dumps({
