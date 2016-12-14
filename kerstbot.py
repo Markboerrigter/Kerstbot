@@ -314,9 +314,7 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data):
-    print(data['data']['gang'])
     if data['ideeen']:
-        print(data['data']['gang'])
         meals = [x for x in data['ideeen']]
     else:
         if 'NagerechtSmaak' not in  data['data']:
@@ -885,7 +883,7 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'We hebben helaas niks gevonden dat aan uw wensen voldoet \nWilt u het opnieuw proberen?'
+              message = 'Voor deze voorkeuren hebben we geen andere keuzes. \nWil je het opnieuw proberen?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
               sendQuicks(recipient, message, quicks)
@@ -896,6 +894,22 @@ def send_message(token, recipient, text, data):
               print('again')
               findToken(recipient, data, 'again')
           elif text == 'Nee':
+              message = 'Voor meer inspiratie kun je onderstaande folders bekijken.'
+              data = messageSend(recipient,message, token,data)
+              quicks = [
+          {
+            "type":"web_url",
+            "url":"https://www.spotta.nl/folders/lidl?fid=1213",
+            "title":"Lidl folder"
+          },
+          {
+            "type":"web_url",
+            "url":"https://www.spotta.nl/folders/jumbo?fid=1194",
+            "title":"Jumbo folder"
+          }
+        ]
+              sendButton(recipient, message, quicks)
+              mg.updateUser(recipient, data)
               findToken(recipient, data, 'ending')
       elif text == 'Ja':
           message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
