@@ -155,6 +155,7 @@ def find(x,L):
     return [(i, colour.index(x)) for i, colour in enumerate(L) if x in colour]
 
 def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
+    print(Ingredient, dessertKind, technique, level, gang,vega)
     gangQuery = findGang(gang)
     if gang == 'Nagerecht':
         voorkeurQuery = findDesertType(dessertKind)
