@@ -342,17 +342,17 @@ def presentMeal(token, recipient, data):
             typing('off', PAT, recipient)
             print(meal1)
             if meal1['Winkel'] == 'Jumbo':
-                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal1['Pagina'])
+                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal1['Pagina'])
             else:
-                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal1['Pagina'])
+                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal1['Pagina'])
             if meal2['Winkel'] == 'Jumbo':
-                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal2['Pagina'])
+                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal2['Pagina'])
             else:
-                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal2['Pagina'])
+                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal2['Pagina'])
             if meal3['Winkel'] == 'Jumbo':
-                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal3['Pagina'])
+                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal3['Pagina'])
             else:
-                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal3['Pagina'])
+                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal3['Pagina'])
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal1['Title']+ '''",
                 "item_url":"'''+ pag1+ '''",
@@ -392,9 +392,9 @@ def presentMeal(token, recipient, data):
             data['presented'].append(meal)
             typing('off', PAT, recipient)
             if meal['Winkel'] == 'Jumbo':
-                pag = 'https://www.spotta.nl/folders/jumbo?fid=1194' + str(meal['Pagina'])
+                pag = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal['Pagina'])
             else:
-                pag = 'https://www.spotta.nl/folders/lidl?fid=1213' + str(meal['Pagina'])
+                pag = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal['Pagina'])
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal['Title']+ '''",
                 "item_url":"'''+ pag+ '''",
