@@ -724,23 +724,23 @@ def send_message(token, recipient, text, data):
   if data['dolog'] == 'end':
       print('done')
   elif text.lower() in thank_quotes:
-            myunicode = u"\U0001f44b"
+            emoji = u"\U0001f44b"
             print(myunicode)
-            emoji = myunicode.encode('utf-8')
+            # emoji = myunicode.encode('utf-8')
             message = ':) jij ook bedankt en een prettige dag.'
             data = messageSend(recipient,message, token,data)
             time.sleep(1)
             sendTexts(recipient, message)
   elif text.lower() in bye_quotes:
-            myunicode = u"\U0001f44b"
-            emoji = myunicode.encode('utf-8')
+            emoji = u"\U0001f44b"
+            # emoji = myunicode.encode('utf-8')
             message =  'Nog een prettige dag.' + emoji
             data = messageSend(recipient,message, token,data)
             time.sleep(1)
             sendTexts(recipient, message)
   elif text.lower() in stop_quotes:
-            myunicode = u"\U0001f44b"
-            emoji = myunicode.encode('utf-8')
+            emoji = u"\U0001f44b"
+            # emoji = myunicode.encode('utf-8')
             message = 'Ik hoop dat alles gelukt is' + emoji
             data = messageSend(recipient,message, token,data)
             time.sleep(1)
