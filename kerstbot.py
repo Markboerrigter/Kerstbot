@@ -546,7 +546,7 @@ def handle_messages():
                     typing('on', PAT, sender)
                     time.sleep(1.5)
                     typing('off', PAT, sender)
-                    sendTexts(recipient,'Oke! Toch bedankt voor het fijne gesprek en veel plezier tijdens pakjesavond!')
+                    sendTexts(recipient,'Oke! Toch bedankt voor het fijne gesprek en veel plezier tijdens de feestdagen!')
                     data['dolog'] = 'end'
                     mg.updateUser(recipient, data)
         else:
@@ -566,7 +566,7 @@ def handle_messages():
                     postdashbot('bot',(sender,message, data['message-id']) )
                     typing('off', PAT, sender)
                     sendTexts(recipient,message)
-                    time.sleep(1.5)
+                    time.sleep(1)
                     message = 'Wil je nu verder met het zoeken van een leuk cadeau?'
                     data['text'].append(('bot',message))
                     data['oldmessage'] = message
@@ -857,14 +857,12 @@ def send_message(token, recipient, text, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
               message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
 
@@ -877,27 +875,23 @@ def send_message(token, recipient, text, data):
           message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
           data = messageSend(recipient,message, token,data)
         #   quicks = ['Ja', 'Nee']
-          time.sleep(1.5)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
       elif text == 'Nee':
           message = 'Bedankt voor je reactie. Ik ga weer even op zoek naar nieuwe ideeen. Momentje..'
           data = messageSend(recipient,message, token,data)
-          time.sleep(1.5)
           sendTexts(recipient, message)
           if presentMeal(token, recipient, data):
               message = 'Lijkt dit je lekker?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
               message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              time.sleep(1.5)
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!':
