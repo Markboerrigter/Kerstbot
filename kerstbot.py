@@ -849,19 +849,19 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'Heb je nog bepaalde ingredienten die je wil gebruiken?'
+              message = 'Welke ingredienten zou je graag gebruiken?'
               data = messageSend(recipient,message, token,data)
             #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
               sendTexts(recipient, message)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
           data['data']['technique'] = text
-          message = 'Heb je nog bepaalde ingredienten die je wil gebruiken?'
+          message = 'Welke ingredienten zou je graag gebruiken?'
           data = messageSend(recipient,message, token,data)
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendTexts(recipient, message)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Heb je nog bepaalde ingredienten die je wil gebruiken?':
+      elif data['oldmessage'] == 'Welke ingredienten zou je graag gebruiken?':
           data['data']['Ingredient'] = text
           message = 'Ik weet genoeg! Ik ga voor je op zoek. Ben zo terug!'
           data = messageSend(recipient,message, token,data)
@@ -878,13 +878,13 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+              message = 'We hebben helaas niks gevonden dat aan uw wensen voldoet \n Wilt u het opnieuw proberen?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
 
-      elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
+      elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen voldoet \n Wilt u het opnieuw proberen?':
           if text == 'Ja':
               findToken(recipient, data, 'again')
           elif text == 'Nee':
