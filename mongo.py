@@ -161,9 +161,9 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
         techniekQuery = ''
     else:
         if isinstance(vega, list):
-            vegaQuery = [x for y in [findVega(x) for x in vega] for x in y]
+            voorkeurQuery  = [x for y in [findVega(x) for x in vega] for x in y]
         else:
-            vegaQuery = findVega(vega)
+            voorkeurQuery  = findVega(vega)
         techniekQuery = findArticlesTitle(technique)
     techniques = [x for [x,y] in techniekQuery]
     levelQuery = findLevel(level)
