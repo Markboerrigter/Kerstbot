@@ -196,6 +196,7 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
 def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
     print(Ingredient, dessertKind, technique, level, gang,vega)
     print(type(gang))
+    print(gang)
     if isinstance(gang,(str, unicode)):
         meals = findForGang(Ingredient, dessertKind, technique, level, gang,vega)
     else:
