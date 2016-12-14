@@ -656,7 +656,7 @@ def handle_messages():
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
         params={"access_token": PAT},
         data=json.dumps({
-          "recipient": {"id": 1363695020339691},
+          "recipient": {"id": 1042410335857237},
           "message": {"text": str(e)
         }}),
         headers={'Content-type': 'application/json'})
@@ -688,7 +688,7 @@ def handle_messages():
         r = requests.post("https://graph.facebook.com/v2.6/me/messages",
         params={"access_token": PAT},
         data=json.dumps({
-          "recipient": {"id": 1363695020339691},
+          "recipient": {"id": 1042410335857237},
           "message": {"text": str(e)
         }}),
         headers={'Content-type': 'application/json'})
