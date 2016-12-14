@@ -524,7 +524,6 @@ def handle_messages():
             data['chitchat'] = []
             data['trig'] = False
             data['meals'] = []
-            data['data']['gang'] = ''
             data['oldincoming'] = message
             data['oldmessage'] = ''
             data['messagenumber'] = 1
@@ -627,7 +626,6 @@ def handle_messages():
                             if len (data['chitchat']) > 3:
                                 data['chitchat'] = []
                             data['dolog'] = 'again'
-                            data['data']['gang'] = ''
                             data['meals'] = []
                             data['ideeen'] = []
                             data['trig'] = False
