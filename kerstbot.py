@@ -33,6 +33,9 @@ finalResponses = mg.findConfig(53)
 TriggerPhrases = Triggers['tigger']
 TriggerCats = Triggers['answers']
 
+thank_quotes = ['bedankt','dank je wel', 'gaaf','dankjewel','dank je']
+bye_quotes = ['bye bye','bye','later','tot ziens','doei','laters','mazzel']
+stop_quotes = ['stop','exit','eind','abort','cancel']
 # sentimentClassifier = pickle.load( open( "sentiment_analysis_final.p", "rb" ) )
 
 def contains_word(w,s):
@@ -720,6 +723,27 @@ def send_message(token, recipient, text, data):
   """
   if data['dolog'] == 'end':
       print('done')
+  elif text.lower() in thank_quotes:
+            myunicode = u'\U0001F44B'
+            emoji = myunicode.encode('utf-8')
+            message = emoji + ' jij ook bedankt en een prettige dag.'
+            data = messageSend(recipient,message, token,data)
+            time.sleep(1)
+            sendTexts(recipient, message)
+  elif text.lower() in bye_quotes:
+            myunicode = u'\U0001F44B'
+            emoji = myunicode.encode('utf-8')
+            message =  'Nog een prettige dag.' + emoji
+            data = messageSend(recipient,message, token,data)
+            time.sleep(1)
+            sendTexts(recipient, message)
+  elif text.lower() in stop_quotes:
+            myunicode = u'\U0001F44B'
+            emoji = myunicode.encode('utf-8')
+            message = 'Ik hoop dat alles gelukt is' + emoji
+            data = messageSend(recipient,message, token,data)
+            time.sleep(1)
+            sendTexts(recipient, message)
   elif data['Stage'] == 'Welkom':
     if text == 'Een gang' or text == 'Een menu':
         findToken(recipient, data, text)
@@ -915,7 +939,13 @@ def send_message(token, recipient, text, data):
           message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
           data = messageSend(recipient,message, token,data)
         #   quicks = ['Ja', 'Nee']
-          sendTexts(recipient, message)
+          buttons = [{
+                      "type":"web_url",
+                      "url":"https://www.spotta.nl/folders/lidl?fid=1213&startpage=85",
+                      "title":"Jumbo folder"
+                    }
+                  ]
+          sendButton(recipient, message,buttons)
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
       elif text == 'Nee':
