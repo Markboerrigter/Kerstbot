@@ -760,7 +760,7 @@ def send_message(token, recipient, text, data):
           if text == 'Vlees/Vis':
               message = 'Wil je dan Vlees, Vis of heb je geen voorkeur?'
               data = messageSend(recipient,message, token,data)
-              quicks = ['Vis', 'Vis en Vlees', 'Vlees']
+              quicks = ['Vis', 'Geen Voorkeur', 'Vlees']
               sendImage(recipient, 'https://s28.postimg.org/xft4djma5/IG_vis_vlees.png')
               sendImage(recipient, 'https://s28.postimg.org/ux7fcv0jx/IG_visvlees.png')
               sendQuicks(recipient, message, quicks)
@@ -774,7 +774,7 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] ==  'Wil je dan Vlees, Vis of heb je geen voorkeur?':
-          if text == 'Vis en Vlees':
+          if text == 'Geen Voorkeur':
               data['data']['voorkeur'] = ['Vis', 'Vlees']
           else:
               data['data']['voorkeur'] = text
