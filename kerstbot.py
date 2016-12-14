@@ -368,7 +368,7 @@ def presentMeal(token, recipient, data):
                 "buttons":[
                     {
                       "type":"web_url",
-                      "url": '''+ pag2+ '''",
+                      "url": "'''+ pag2+ '''",
                       "title":"Bekijk het recept!"
                     }]}''',
                 '''{
