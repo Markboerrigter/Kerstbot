@@ -737,7 +737,7 @@ def send_message(token, recipient, text, data):
         mg.updateUser(recipient, data)
     else:
         # message = random.choice(startmessage)
-        message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor de kerstdagen.'
+        message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor het kerstdiner.'
         data = messageSend(recipient,message, token,data)
         sendTexts(recipient, message)
         message = 'Ben je op zoek naar een volledig menu, of heb je alleen inspiratie nodig voor een voor- hoofd- of nagerecht?'
@@ -832,7 +832,7 @@ def send_message(token, recipient, text, data):
           findToken(recipient, data, text)
   elif data['Stage'] == 'Keuzes':
       if text == 'Keuze':
-          message = 'Vind jij jezelf meer een sterrenchef of behoor jij meer tot de amateurkoks?'
+          message = 'Vind jij jezelf een echte sterrenchef of hou je het liever wat eenvoudiger?'
           data = messageSend(recipient,message, token,data)
           sendImage(recipient, 'https://s23.postimg.org/70am1zryj/IG_chef_amateur.png')
           quicks = ['Sterrenchef','Amateur']
