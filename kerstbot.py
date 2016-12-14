@@ -615,6 +615,7 @@ def handle_messages():
                             if data['info']:
                                 log['info']= data['info']
                             if data['data']:
+                                data['data']['gangen']= data['gang']
                                 log['data']= (data['data'])
                             if data['presented']:
                                 log['presented']=(data['presented'])
@@ -629,6 +630,7 @@ def handle_messages():
                             data['dolog'] = 'again'
                             data['gang'] = ''
                             data['meals'] = []
+                            data['ideeen'] = []
                             data['trig'] = False
                             data['token'] = '2'
                             data['starter'] = ''
