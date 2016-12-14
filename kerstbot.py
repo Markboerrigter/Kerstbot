@@ -504,8 +504,7 @@ def isFood(text):
     if 'entities' in x:
         entities = x['entities']
         if 'Eten' in entities:
-            print(entities)
-            return entities['Eten'][0]['value']
+            return entities['Eten'][0]['confidence']
         else:
             return False
     else:
@@ -734,7 +733,6 @@ def messaging_events(payload):
 def send_message(token, recipient, text, data):
   """Send the message text to recipient with id recipient.
   """
-  print(isFood(text))
   print('Is it Food?: ' + str(isFood(text)))
   if data['dolog'] == 'end':
       print('done')
