@@ -746,7 +746,6 @@ def send_message(token, recipient, text, data):
         sendQuicks(recipient, message, quicks)
         mg.updateUser(recipient, data)
     else:
-        # message = random.choice(startmessage)
         message = 'Hallo ' + data['info']['first_name']+ '! Ik ben jouw hulp in de keuken en help je graag met het uitzoeken van het perfecte menu voor het kerstdiner.'
         data = messageSend(recipient,message, token,data)
         sendTexts(recipient, message)
