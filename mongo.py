@@ -181,6 +181,7 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
             ind = find(x,titleQuery)[0]
             a+=titleQuery[ind[0]][1]
         print(x)
+        print(voorkeurQuery)
         if x in voorkeurQuery:
             a += 2
         if x in levelQuery:
