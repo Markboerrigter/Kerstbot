@@ -956,7 +956,7 @@ def send_message(token, recipient, text, data):
           buttons = [{
                       "type":"web_url",
                       "url":"https://www.spotta.nl/folders/lidl?fid=1213&startpage=85",
-                      "title":"Jumbo folder"
+                      "title":"De wijn folder"
                     }
                   ]
           sendButton(recipient, message,buttons)
