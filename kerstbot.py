@@ -733,6 +733,7 @@ def messaging_events(payload):
 def send_message(token, recipient, text, data):
   """Send the message text to recipient with id recipient.
   """
+  print(isFood(text))
   print('Is it Food?: ' + str(isFood(text)))
   if data['dolog'] == 'end':
       print('done')
