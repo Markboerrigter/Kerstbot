@@ -499,6 +499,18 @@ def messageSend(recipient,message, token,data):
     time.sleep(1)
     return data
 
+def isFood(text):
+    x = tb.response(text,"CWHC2L5AL2SCFI7IDA56Q57Y6B4EENZB", 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", ''))
+    if 'entities' in x:
+        entities = x['entities']
+        if 'Eten' in entities:
+            return entities['Eten'][0]['value']
+        else:
+            return False
+    else:
+        return False
+
+
 """ FUNCTIONS TO RECEIVE AND SEND MESSAGES
 
 below the receive and send functions can be found.
@@ -721,6 +733,7 @@ def messaging_events(payload):
 def send_message(token, recipient, text, data):
   """Send the message text to recipient with id recipient.
   """
+  print('Is it Food?: ' + str(isFood(text)))
   if data['dolog'] == 'end':
       print('done')
   elif text.lower() in thank_quotes:
