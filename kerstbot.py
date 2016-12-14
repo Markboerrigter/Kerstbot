@@ -981,7 +981,12 @@ def send_message(token, recipient, text, data):
       elif data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!':
           findToken(recipient, data, '')
       else:
-          findToken(recipient, data, '')
+          message = 'Wil je nog meer suggesties?'
+          data = messageSend(recipient,message, token,data)
+          quicks = ['Ja', 'Nee']
+          sendQuicks(recipient, message, quicks)
+          mg.updateUser(recipient, data)
+        #   findToken(recipient, data, '')
   # elif data['Stage'] =='Chitchat':
   #     if text == 'chitchat':
   #         message = random.choice(Chitchat)
