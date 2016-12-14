@@ -335,34 +335,46 @@ def presentMeal(token, recipient, data):
             data['ideeen'][1].remove(meal2)
             data['ideeen'][2].remove(meal3)
             typing('off', PAT, recipient)
+            if meal1['Winkel'] == 'Jumbo':
+                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal1['Pagina']
+            else:
+                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal1['Pagina']
+            if meal2['Winkel'] == 'Jumbo':
+                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal2['Pagina']
+            else:
+                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal2['Pagina']
+            if meal3['Winkel'] == 'Jumbo':
+                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal3['Pagina']
+            else:
+                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal3['Pagina']
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal1['Title']+ '''",
-                "item_url":"'''+ meal1['Link gerecht']+ '''",
+                "item_url":"'''+ pag1+ '''",
                 "image_url":"'''+ meal1['Link afbeelding']+ '''",
                 "buttons":[
                   {
                     "type":"web_url",
-                    "url": "http://www.lidl.nl/nl/index.htm",
+                    "url": "'''+ pag1+ '''",
                     "title":"Bekijk het recept!"
                   }]}''',
               '''{
                 "title":"'''+ meal2['Title']+ '''",
-                "item_url":"'''+ meal2['Link gerecht']+ '''",
+                "item_url":"'''+ pag2+ '''",
                 "image_url":"'''+ meal2['Link afbeelding']+ '''",
                 "buttons":[
                     {
                       "type":"web_url",
-                      "url": "http://www.lidl.nl/nl/index.htm",
+                      "url": '''+ pag2+ '''",
                       "title":"Bekijk het recept!"
                     }]}''',
                 '''{
                 "title":"'''+ meal3['Title']+ '''",
-                "item_url":"'''+ meal3['Link gerecht']+ '''",
+                "item_url":"'''+ pag3+ '''",
                 "image_url":"'''+ meal3['Link afbeelding']+ '''",
                 "buttons":[
                   {
                     "type":"web_url",
-                    "url": "http://www.lidl.nl/nl/index.htm",
+                    "url": "'''+ pag3+ '''",
                     "title":"Bekijk het recept!"
                   }]}
                               '''])
@@ -373,14 +385,18 @@ def presentMeal(token, recipient, data):
             postdashbot('bot',(recipient,'meal: '+ meal['Title'], data['message-id']) )
             data['presented'].append(meal)
             typing('off', PAT, recipient)
+            if meal['Winkel'] == 'Jumbo':
+                pag = 'https://www.spotta.nl/folders/jumbo?fid=1194' + meal['Pagina']
+            else:
+                pag = 'https://www.spotta.nl/folders/lidl?fid=1213' + meal['Pagina']
             sendTemplate(recipient, ['''{
                 "title":"'''+ meal['Title']+ '''",
-                "item_url":"'''+ meal['Link gerecht']+ '''",
+                "item_url":"'''+ pag]+ '''",
                 "image_url":"'''+ meal['Link afbeelding']+ '''",
                 "buttons":[
                   {
                     "type":"web_url",
-                    "url": "http://www.lidl.nl/nl/index.htm",
+                    "url": "'''+ pag+ '''",
                     "title":"Bekijk het recept!"
                   }]}'''])
             mg.updateUser(recipient, data)
@@ -809,7 +825,7 @@ def send_message(token, recipient, text, data):
               message = 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?'
               data = messageSend(recipient,message, token,data)
               sendImage(recipient, 'https://s23.postimg.org/ehjth7hhn/IG_grill_oven.png')
-              sendImage(recipient, 'https://s23.postimg.org/8s86an0p7/IG_wok.png')
+              sendImage(recipient, 'https://s23.postimg.org/78iytm64r/IG_wok.png')
               quicks = ['Grillen', 'Oven', 'Wokken']
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
