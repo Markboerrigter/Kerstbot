@@ -524,6 +524,7 @@ def handle_messages():
             data['chitchat'] = []
             data['trig'] = False
             data['meals'] = []
+            data['ideeen']
             data['oldincoming'] = message
             data['oldmessage'] = ''
             data['messagenumber'] = 1
@@ -609,8 +610,6 @@ def handle_messages():
                                 log['feedback']= (data['data']['Feedback'])
                             else:
                                 log['feedback']= ('0')
-                            if data['data']['type']:
-                                log['type'] = data['data']['type']
                             if data['info']:
                                 log['info']= data['info']
                             if data['data']:
