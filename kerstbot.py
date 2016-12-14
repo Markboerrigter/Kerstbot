@@ -520,7 +520,6 @@ below the receive and send functions can be found.
 @app.route('/', methods=['POST'])
 def handle_messages():
   payload = request.get_data()
-  print(payload)
   for sender, message, mid, recipient in messaging_events(payload) :
     try:
         print("Incoming from %s: %s" % (sender, message))
