@@ -188,8 +188,6 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
             a += 2
         if x in ideaQuery:
             a +=2
-        if x in vegaQuery:
-            a += 3
         finalScore.append([x,a])
     finalScore = sorted(finalScore, key=lambda x: x[1])[::-1]
     finalScore = [x for [x,y] in finalScore]
