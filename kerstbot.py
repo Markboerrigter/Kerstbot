@@ -351,8 +351,8 @@ def presentMeal(token, recipient, data):
                 pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal3['Pagina'])
             else:
                 pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal3['Pagina'])
-            sendTemplate(recipient, ['''{
-                "title":"'''+ meal1['Title']+ '''",
+            sendTemplate(recipient, ['''
+            {"title":"'''+ meal1['Title']+ '''",
                 "item_url":"'''+ pag1+ '''",
                 "image_url":"'''+ meal1['Link afbeelding']+ '''",
                 "buttons":[
