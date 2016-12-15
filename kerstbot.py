@@ -1004,7 +1004,7 @@ def send_message(token, recipient, text, data):
                           "title":"De wijn folder"
                         }
                       ]
-              sendButton(recipient, message)
+              sendButton(recipient, message, buttons)
               mg.updateUser(recipient, data)
               findToken(recipient, data, '')
           elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
