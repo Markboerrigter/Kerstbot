@@ -794,14 +794,14 @@ def send_message(token, recipient, text, data):
       if text == 'menu':
           message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Vlees/Vis','Vegetarisch']
+          quicks = ['Vlees/Vis','Vegetarisch', 'Geen voorkeur']
           sendImage(recipient, 'https://s23.postimg.org/m5bbd95jf/IG_vlees_vega.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?':
 
           if text == 'Vlees/Vis':
-              message = 'Wil je dan Vlees, Vis of heb je geen voorkeur?'
+              message = 'Wil je dan vlees, vis of heb je geen voorkeur?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Vis', 'Geen Voorkeur', 'Vlees']
               sendImage(recipient, 'https://s28.postimg.org/xft4djma5/IG_vis_vlees.png')
@@ -809,10 +809,12 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
+              if text == 'geen voorkeur':
+                  data['data']['voorkeur'] = ['Vlees', 'Vis', 'Vegetarisch']
               data['data']['voorkeur'] = text
-              message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
+              message = 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?'
               data = messageSend(recipient,message, token,data)
-              quicks = ['Cake', 'Ijs']
+              quicks = ['Taart', 'Ijs']
               sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
@@ -821,14 +823,17 @@ def send_message(token, recipient, text, data):
               data['data']['voorkeur'] = ['Vis', 'Vlees']
           else:
               data['data']['voorkeur'] = text
-          message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
+          message = 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?'
           data = messageSend(recipient,message, token,data)
-          quicks = ['Cake', 'Ijs']
+          quicks = ['Taart', 'IJs']
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?':
-          data['data']['NagerechtSmaak'] = text
+      elif data['oldmessage'] == 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?':
+          if text == 'Taart':
+              text = 'Cake'
+          else:
+              data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, '')
       else:
@@ -854,16 +859,19 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif text == 'Nagerecht':
           data['data']['gang']= text
-          message = 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?'
+          message = 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?'
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
-          quicks = ['Cake', 'Ijs']
+          quicks = ['Cake', 'IJs']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Ben je op zoek naar een ijs-dessert of zit je meer te denken aan een taart of cake?':
-          data['data']['NagerechtSmaak'] = text
+      elif data['oldmessage'] == 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?':
+          if text == 'Taart':
+              text = 'Cake'
+          else:
+              data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
       elif data['oldmessage'] == 'Ben je op zoek naar een vegetarisch gerecht, of toch liever vlees of vis?':
@@ -888,7 +896,7 @@ def send_message(token, recipient, text, data):
               data = messageSend(recipient,message, token,data)
               sendImage(recipient, 'https://s23.postimg.org/ehjth7hhn/IG_grill_oven.png')
               sendImage(recipient, 'https://s23.postimg.org/78iytm64r/IG_wok.png')
-              quicks = ['Grillen', 'Oven', 'Wokken']
+              quicks = ['Grillen', 'Oven', 'Bakken']
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
@@ -950,34 +958,58 @@ def send_message(token, recipient, text, data):
               mg.updateUser(recipient, data)
               findToken(recipient, data, 'ending')
       elif text == 'Ja':
-          message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
-          data = messageSend(recipient,message, token,data)
-        #   quicks = ['Ja', 'Nee']
-          buttons = [{
-                      "type":"web_url",
-                      "url":"https://www.spotta.nl/folders/lidl?fid=1213&startpage=85",
-                      "title":"De wijn folder"
-                    }
-                  ]
-          sendButton(recipient, message,buttons)
-          mg.updateUser(recipient, data)
-          findToken(recipient, data, '')
-      elif text == 'Nee':
-          message = 'Bedankt voor je reactie. Ik ga even op zoek naar nieuwe ideeen. Momentje..'
-          data = messageSend(recipient,message, token,data)
-          sendTexts(recipient, message)
-          if presentMeal(token, recipient, data):
-              message = 'Lijkt dit je lekker?'
-              data = messageSend(recipient,message, token,data)
-              quicks = ['Ja', 'Nee']
-              sendQuicks(recipient, message, quicks)
-              mg.updateUser(recipient, data)
+          if data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Wil je misschien nog meer suggesties?':
+            message = 'Bedankt voor je reactie. Ik ga even op zoek naar nieuwe ideeen. Momentje..'
+            data = messageSend(recipient,message, token,data)
+            sendTexts(recipient, message)
+            if presentMeal(token, recipient, data):
+                message = 'Lijkt dit je lekker?'
+                data = messageSend(recipient,message, token,data)
+                quicks = ['Ja', 'Nee']
+                sendQuicks(recipient, message, quicks)
+                mg.updateUser(recipient, data)
+            else:
+                message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+                data = messageSend(recipient,message, token,data)
+                quicks = ['Ja', 'Nee']
+                sendQuicks(recipient, message, quicks)
+                mg.updateUser(recipient, data)
           else:
-              message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+              message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Wil je misschien nog meer suggesties?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              sendQuicks(recipient, message, quicks)
+              sendQuicks(recipient, message,buttons)
               mg.updateUser(recipient, data)
+              findToken(recipient, data, '')
+      elif text == 'Nee':
+          if data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Wil je misschien nog meer suggesties?':
+              message = 'Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
+              data = messageSend(recipient,message, token,data)
+              buttons = [{
+                          "type":"web_url",
+                          "url":"https://www.spotta.nl/folders/lidl?fid=1213&startpage=85",
+                          "title":"De wijn folder"
+                        }
+                      ]
+              sendButton(recipient, message)
+              mg.updateUser(recipient, data)
+              findToken(recipient, data, '')
+          else:
+              message = 'Bedankt voor je reactie. Ik ga even op zoek naar nieuwe ideeen. Momentje..'
+              data = messageSend(recipient,message, token,data)
+              sendTexts(recipient, message)
+              if presentMeal(token, recipient, data):
+                  message = 'Lijkt dit je lekker?'
+                  data = messageSend(recipient,message, token,data)
+                  quicks = ['Ja', 'Nee']
+                  sendQuicks(recipient, message, quicks)
+                  mg.updateUser(recipient, data)
+              else:
+                  message = 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?'
+                  data = messageSend(recipient,message, token,data)
+                  quicks = ['Ja', 'Nee']
+                  sendQuicks(recipient, message, quicks)
+                  mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!':
           findToken(recipient, data, '')
       else:
