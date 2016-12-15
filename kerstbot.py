@@ -332,7 +332,6 @@ def presentMeal(token, recipient, data):
         data['ideeen'] = meals
     meals = [x for x in meals if x not in data['presented']]
     if meals:
-        print(meals[0])
         if isinstance(meals[0], list):
             meal1 = meals[0][0]
             meal2 = meals[1][0]
@@ -790,7 +789,6 @@ def send_message(token, recipient, text, data):
             sendQuicks(recipient, message, quicks)
             mg.updateUser(recipient, data)
   elif data['Stage'] == 'Gangen' and data['data']['type'] == 'menu':
-      print(text)
       if text == 'menu':
           message = 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?'
           data = messageSend(recipient,message, token,data)
@@ -978,7 +976,7 @@ def send_message(token, recipient, text, data):
               message = 'Mooi zo! Fijn dat ik je heb kunnen helpen! Wil je misschien nog meer suggesties?'
               data = messageSend(recipient,message, token,data)
               quicks = ['Ja', 'Nee']
-              sendQuicks(recipient, message,buttons)
+              sendQuicks(recipient, message,quicks)
               mg.updateUser(recipient, data)
               findToken(recipient, data, '')
       elif text == 'Nee':
@@ -1073,7 +1071,6 @@ def send_message(token, recipient, text, data):
       mg.updateUser(recipient, data)
   else:
     response, data = getResponse(recipient, text, data)
-    print(response)
     if response['type'] == 'stop' or response['msg'] == data['oldmessage']:
     	findToken(recipient, data, text)
         mg.updateUser(recipient, data)
