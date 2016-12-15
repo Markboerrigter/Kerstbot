@@ -578,7 +578,7 @@ def handle_messages():
                     typing('off', PAT, sender)
                     sendTexts(recipient,message)
                     time.sleep(1)
-                    message = 'Wil je nu verder met het zoeken van een leuk cadeau?'
+                    message = 'Wil je nu verder met het zoeken van een lekker gerecht'
                     data['text'].append(('bot',message))
                     data['oldmessage'] = message
                     postdashbot('bot',(sender,message, data['message-id']) )
@@ -590,7 +590,7 @@ def handle_messages():
                 elif triggered(message, sender):
                     typing('on', PAT, sender)
                     time.sleep(1.5)
-                    message = 'Wil je nu verder met het zoeken van een leuk cadeau?'
+                    message = 'Wil je nu verder met het zoeken van een lekker gerecht?'
                     data['text'].append(('bot',message))
                     data['oldmessage'] = message
                     postdashbot('bot',(sender,message, data['message-id']) )
@@ -861,7 +861,7 @@ def send_message(token, recipient, text, data):
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
-          quicks = ['Cake', 'IJs']
+          quicks = ['Taart, 'IJs']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
