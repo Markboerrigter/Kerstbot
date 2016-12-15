@@ -861,7 +861,7 @@ def send_message(token, recipient, text, data):
           sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
           data = messageSend(recipient,message, token,data)
         #   data['data']['Nagerecht'] = text
-          quicks = ['Taart, 'IJs']
+          quicks = ['Taart', 'IJs']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
