@@ -898,24 +898,39 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'Welke ingredienten zou je graag gebruiken?'
+              message = 'Heb je bepaalde ingredienten in gedachten die je wil gebruiken?'
               data = messageSend(recipient,message, token,data)
+              quicks = ['Ja', 'Nee']
             #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-              sendTexts(recipient, message)
+              sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
           data['data']['technique'] = text
-          message = 'Welke ingredienten zou je graag gebruiken?'
+          message = 'Heb je bepaalde ingredienten in gedachten die je wil gebruiken?'
           data = messageSend(recipient,message, token,data)
+          quicks = ['Ja', 'Nee']
         #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-          sendTexts(recipient, message)
+          sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-      elif data['oldmessage'] == 'Welke ingredienten zou je graag gebruiken?':
+
+      elif data['oldmessage'] == 'Heb je bepaalde ingredienten in gedachten die je wil gebruiken?':
+          if text.lower() == 'nee':
+              data['data']['Ingredient'] = ''
+              message = 'Oke dan ga ik voor je zoeken, ben zo terug!'
+              data = messageSend(recipient,message, token,data)
+              sendTexts(recipient, message)
+              mg.updateUser(recipient, data)
+              findToken(recipient, data, text)
+          else:
+              message = 'Wat zijn je ideeen dan?'
+              data = messageSend(recipient,message, token,data)
+              sendTexts(recipient, message)
+              mg.updateUser(recipient, data)
+      elif data['oldmessage'] == 'Wat zijn je ideeen dan?':
           data['data']['Ingredient'] = text
           message = 'Ik weet genoeg! Ik ga voor je op zoek. Ben zo terug!'
           data = messageSend(recipient,message, token,data)
           sendTexts(recipient, message)
-          mg.updateUser(recipient, data)
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
   elif data['Stage'] == 'Presentatie':
@@ -978,7 +993,7 @@ def send_message(token, recipient, text, data):
               quicks = ['Ja', 'Nee']
               sendQuicks(recipient, message,quicks)
               mg.updateUser(recipient, data)
-              findToken(recipient, data, '')
+            #   findToken(recipient, data, '')
       elif text == 'Nee':
           if data['oldmessage'] == 'Mooi zo! Fijn dat ik je heb kunnen helpen! Wil je misschien nog meer suggesties?':
               message = 'Heb je nog tips nodig voor wat betreft de wijn bij het diner? Neem eens een kijkje in onze folder!'
@@ -991,6 +1006,8 @@ def send_message(token, recipient, text, data):
                       ]
               sendButton(recipient, message)
               mg.updateUser(recipient, data)
+              findToken(recipient, data, '')
+          elif data['oldmessage'] == 'We hebben helaas niks gevonden dat aan uw wensen wilt voldoen \n Wilt u het opnieuw proberen?':
               findToken(recipient, data, '')
           else:
               message = 'Bedankt voor je reactie. Ik ga even op zoek naar nieuwe ideeen. Momentje..'
