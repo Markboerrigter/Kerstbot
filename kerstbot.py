@@ -829,7 +829,7 @@ def send_message(token, recipient, text, data):
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Ben je op zoek naar een ijsdessert of zit je meer te denken aan een taart of cake?':
           if text == 'Taart':
-              data['data']['NagerechtSmaak'] = text 'Cake'
+              data['data']['NagerechtSmaak'] = 'Cake'
           else:
               data['data']['NagerechtSmaak'] = text
           mg.updateUser(recipient, data)
