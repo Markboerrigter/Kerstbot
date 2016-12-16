@@ -322,9 +322,12 @@ def presentMeal(token, recipient, data):
         meals = [x for x in data['ideeen']]
     else:
         if 'NagerechtSmaak' not in  data['data']:
-            meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['data']['gang'],data['data']['voorkeur'])
+            if 'technique' not in data['data']:
+                meals = mg.findRightProduct(data['data']['Ingredient'], '', '', data['data']['level'], data['data']['gang'],'')
+            else:
+                meals = mg.findRightProduct(data['data']['Ingredient'], '', data['data']['technique'], data['data']['level'], data['data']['gang'],'')
         elif 'voorkeur' not in  data['data']:
-            if 'technique'  not in data['data']:
+            if 'technique' not in data['data']:
                 meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], '', data['data']['level'], data['data']['gang'],'')
             else:
                 meals = mg.findRightProduct(data['data']['Ingredient'], data['data']['NagerechtSmaak'], data['data']['technique'], data['data']['level'], data['data']['gang'],'')
