@@ -317,6 +317,7 @@ def getFeedback(data):
         return '1'
 
 def presentMeal(token, recipient, data):
+    data['data']['Ingredient'] = ''
     if data['ideeen']:
         meals = [x for x in data['ideeen']]
     else:
