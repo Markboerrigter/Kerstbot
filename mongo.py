@@ -212,8 +212,8 @@ def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
 # x = findRightProduct(u'', '', u'Oven', u'Amateur', u'Hoofdgerecht', u'Vegetarisch')
 # # x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
 # #
-for y in x :
-    print(y['Title'])
+# for y in x :
+#     print(y['Title'])
 
 def printprod(L):
     for x in L:
