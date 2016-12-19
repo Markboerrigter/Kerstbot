@@ -185,6 +185,8 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
         # print(voorkeurQuery)
         if x in voorkeurQuery:
             a += 2
+        else:
+            a-= 10
         if x in levelQuery:
             a += 2
         if x in ideaQuery:
@@ -195,9 +197,9 @@ def findForGang(Ingredient, dessertKind, technique, level, gang,vega):
     return finalScore
 
 def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
-    print(Ingredient, dessertKind, technique, level, gang,vega)
-    print(type(gang))
-    print(gang)
+    # print(Ingredient, dessertKind, technique, level, gang,vega)
+    # print(type(gang))
+    # print(gang)
     if isinstance(gang,(str, unicode)):
         meals = findForGang(Ingredient, dessertKind, technique, level, gang,vega)
     else:
@@ -207,11 +209,11 @@ def findRightProduct(Ingredient, dessertKind, technique, level, gang,vega):
     return meals
 
 #
-# x = findRightProduct(u'zalm', '', u'Wokken', u'Sterrenchef', u'Voorgerecht', u'Vis')
+# x = findRightProduct(u'', '', u'Oven', u'Amateur', u'Hoofdgerecht', u'Vegetarisch')
 # # x = findRightProduct('beef', '', 'Oven', 'Amateur', 'Hoofdgerecht','Vlees')
 # #
-# for y in x :
-#     print(y['Title'])
+for y in x :
+    print(y['Title'])
 
 def printprod(L):
     for x in L:
