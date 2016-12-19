@@ -569,8 +569,8 @@ def handle_messages():
             print(mid, data['message-id'])
             if mid != data['message-id']:
                 data['messagenumber'] +=1
-                if data['messagenumber'] > data['messagenumberresponse']+2:
-                    pass
+                # if data['messagenumber'] > data['messagenumberresponse']+2:
+                #     pass
                 elif findword(message):
                     typing('on', PAT, sender)
                     time.sleep(1.5)
@@ -649,6 +649,7 @@ def handle_messages():
                             data['session'] = 'GreenOrange-session-' + str(datetime.datetime.now()).replace(" ", '')
                             data['data'] = {}
                     data['text'].append(('user',message))
+
                     data['message-id'] = mid
                     data['oldincoming'] = message
                     mg.updateUser(recipient, data)
