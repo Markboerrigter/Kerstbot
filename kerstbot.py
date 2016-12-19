@@ -902,12 +902,16 @@ def send_message(token, recipient, text, data):
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
           else:
-              message = 'Heb je bepaalde ingredienten in gedachten die je wil gebruiken?'
+              message = 'Ik weet genoeg! Ik ga voor je op zoek. Ben zo terug!'
               data = messageSend(recipient,message, token,data)
-              quicks = ['Ja', 'Nee']
-            #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
-              sendQuicks(recipient, message, quicks)
+              sendTexts(recipient, message)
+            #   message = 'Heb je bepaalde ingredienten in gedachten die je wil gebruiken?'
+            #   data = messageSend(recipient,message, token,data)
+            #   quicks = ['Ja', 'Nee']
+            # #   sendImage(Keuze gebruiker (visueel): vegetarisch of vlees/vis)
+            #   sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
+              findToken(recipient, data, text)
       elif data['oldmessage'] == 'En voor wat betreft de manier van bereiden, waar gaat je voorkeur dan naar uit?':
 
           data['data']['technique'] = text
