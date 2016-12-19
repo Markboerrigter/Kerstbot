@@ -571,7 +571,7 @@ def handle_messages():
                 data['messagenumber'] +=1
                 # if data['messagenumber'] > data['messagenumberresponse']+2:
                 #     pass
-                elif findword(message):
+                if findword(message):
                     typing('on', PAT, sender)
                     time.sleep(1.5)
                     typing('off', PAT, sender)
