@@ -881,9 +881,14 @@ def send_message(token, recipient, text, data):
           data['data']['voorkeur'] = text
           mg.updateUser(recipient, data)
           findToken(recipient, data, text)
-      else:
+      elif text not in ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht']:
+          message = 'Wil je alsjeblieft de knoppen gebruiken? \nVoor welke gang heb je inspiratie nodig?'
+          data = messageSend(recipient,message, token,data)
+          sendImage(recipient, 'https://s23.postimg.org/uc3b4tvm3/IG_voor_hoofd.png')
+          sendImage(recipient, 'https://s23.postimg.org/ce9e9jhor/IG_na.png')
+          quicks = ['Voorgerecht', 'Hoofdgerecht', 'Nagerecht']
+          sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
-          findToken(recipient, data, text)
   elif data['Stage'] == 'Keuzes':
       if text == 'Keuze':
           message = 'Vind jij jezelf een echte sterrenchef of hou je het liever wat eenvoudiger?'
