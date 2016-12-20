@@ -337,58 +337,65 @@ def presentMeal(token, recipient, data):
     meals = [x for x in meals if x not in data['presented']]
     if meals:
         if isinstance(meals[0], list):
-            meal1 = meals[0][0]
-            meal2 = meals[1][0]
-            meal3 = meals[2][0]
-            postdashbot('bot',(recipient,'meal: '+ meal1['Title']+ meal2['Title']+ meal3['Title'], data['message-id']) )
-            data['presented'].extend([meal1, meal2, meal3])
-            data['ideeen'][0].remove(meal1)
-            data['ideeen'][1].remove(meal2)
-            data['ideeen'][2].remove(meal3)
-            typing('off', PAT, recipient)
-            if meal1['Winkel'] == 'Jumbo':
-                pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal1['Pagina'])
+            meal1 = []
+            meal2 = []
+            meal3 = []
+            if meals[0] and meals[1] and meals[2]:
+                meal1 = meals[0][0]
+                meal2 = meals[1][0]
+                meal3 = meals[2][0]
+
+                postdashbot('bot',(recipient,'meal: '+ meal1['Title']+ meal2['Title']+ meal3['Title'], data['message-id']) )
+                data['presented'].extend([meal1, meal2, meal3])
+                data['ideeen'][0].remove(meal1)
+                data['ideeen'][1].remove(meal2)
+                data['ideeen'][2].remove(meal3)
+                typing('off', PAT, recipient)
+                if meal1['Winkel'] == 'Jumbo':
+                    pag1 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal1['Pagina'])
+                else:
+                    pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal1['Pagina'])
+                if meal2['Winkel'] == 'Jumbo':
+                    pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal2['Pagina'])
+                else:
+                    pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal2['Pagina'])
+                if meal3['Winkel'] == 'Jumbo':
+                    pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal3['Pagina'])
+                else:
+                    pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal3['Pagina'])
+                sendTemplate(recipient, ['''
+                {"title":"'''+ meal1['Title']+ '''",
+                    "item_url":"'''+ pag1+ '''",
+                    "image_url":"'''+ meal1['Link afbeelding']+ '''",
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url": "'''+ pag1+ '''",
+                        "title":"Bekijk het recept!"
+                      }]}''',
+                  '''{
+                    "title":"'''+ meal2['Title']+ '''",
+                    "item_url":"'''+ pag2+ '''",
+                    "image_url":"'''+ meal2['Link afbeelding']+ '''",
+                    "buttons":[
+                        {
+                          "type":"web_url",
+                          "url": "'''+ pag2+ '''",
+                          "title":"Bekijk het recept!"
+                        }]}''',
+                    '''{
+                    "title":"'''+ meal3['Title']+ '''",
+                    "item_url":"'''+ pag3+ '''",
+                    "image_url":"'''+ meal3['Link afbeelding']+ '''",
+                    "buttons":[
+                      {
+                        "type":"web_url",
+                        "url": "'''+ pag3+ '''",
+                        "title":"Bekijk het recept!"
+                      }]}'''])
+                mg.updateUser(recipient, data)
             else:
-                pag1 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal1['Pagina'])
-            if meal2['Winkel'] == 'Jumbo':
-                pag2 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal2['Pagina'])
-            else:
-                pag2 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal2['Pagina'])
-            if meal3['Winkel'] == 'Jumbo':
-                pag3 = 'https://www.spotta.nl/folders/jumbo?fid=1194&startpage=' + str(meal3['Pagina'])
-            else:
-                pag3 = 'https://www.spotta.nl/folders/lidl?fid=1213&startpage=' + str(meal3['Pagina'])
-            sendTemplate(recipient, ['''
-            {"title":"'''+ meal1['Title']+ '''",
-                "item_url":"'''+ pag1+ '''",
-                "image_url":"'''+ meal1['Link afbeelding']+ '''",
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url": "'''+ pag1+ '''",
-                    "title":"Bekijk het recept!"
-                  }]}''',
-              '''{
-                "title":"'''+ meal2['Title']+ '''",
-                "item_url":"'''+ pag2+ '''",
-                "image_url":"'''+ meal2['Link afbeelding']+ '''",
-                "buttons":[
-                    {
-                      "type":"web_url",
-                      "url": "'''+ pag2+ '''",
-                      "title":"Bekijk het recept!"
-                    }]}''',
-                '''{
-                "title":"'''+ meal3['Title']+ '''",
-                "item_url":"'''+ pag3+ '''",
-                "image_url":"'''+ meal3['Link afbeelding']+ '''",
-                "buttons":[
-                  {
-                    "type":"web_url",
-                    "url": "'''+ pag3+ '''",
-                    "title":"Bekijk het recept!"
-                  }]}'''])
-            mg.updateUser(recipient, data)
+                return False
         else:
             meal = meals[0]
             data['ideeen'].remove(meal)
