@@ -809,7 +809,6 @@ def send_message(token, recipient, text, data):
           sendQuicks(recipient, message, quicks)
           mg.updateUser(recipient, data)
       elif data['oldmessage'] == 'Leuk om je te helpen bij het samenstellen van het kerstmenu. Mag ik vragen of het een vegetarisch, of een vlees/vis menu moet worden?':
-
           if text == 'Vlees/Vis':
               message = 'Wil je dan vlees, vis of heb je geen voorkeur?'
               data = messageSend(recipient,message, token,data)
@@ -828,7 +827,7 @@ def send_message(token, recipient, text, data):
               sendImage(recipient, 'https://s23.postimg.org/6m9a2e7uz/IG_cake_ijs.png')
               sendQuicks(recipient, message, quicks)
               mg.updateUser(recipient, data)
-      elif data['oldmessage'] ==  'Wil je dan Vlees, Vis of heb je geen voorkeur?':
+      elif data['oldmessage'] ==  'Wil je dan vlees, vis of heb je geen voorkeur?':
           if text == 'Geen Voorkeur':
               data['data']['voorkeur'] = ['Vis', 'Vlees']
           else:
